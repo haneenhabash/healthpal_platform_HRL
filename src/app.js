@@ -22,6 +22,9 @@ const options = {
 };
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
+const patientRoutes = require('./routes/patientRoutes');
+app.use('/api/patients', patientRoutes);
+
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK 👌',
@@ -41,6 +44,9 @@ async function startServer() {
   try {
     await sequelize.authenticate();
     console.log('✅ Database connected successfully!');
+
+    await sequelize.sync({ alter: true });
+console.log(' All tables are created or updated!');
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
