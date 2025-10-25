@@ -3,27 +3,46 @@ const express = require('express');
 const cors = require('cors');     
 require('dotenv').config();       
 const sequelize = require('./config/db');
+const swaggerDocs = require('./swagger');
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+swaggerDocs(app);
 
-const options = {
-  definition: {
-    openapi: '3.0.0',
-    info: { title: 'HealthPal API', version: '1.0.0', description: 'API documentation for HealthPal clinical management system' },
-    servers: [{ url: 'http://localhost:3000' }],
-  },
-  apis: ['./app.js'], 
-};
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
+
 
 const patientRoutes = require('./routes/patientRoutes');
 app.use('/api/patients', patientRoutes);
+/**
+ * @swagger
+ * /api/health:
+ *   get:
+ *     summary: Check if the HealthPal API is running
+ *     description: Returns a status message to confirm that the API is active and healthy.
+ *     responses:
+ *       200:
+ *         description: Successful health check
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "OK 👌"
+ *                 message:
+ *                   type: string
+ *                   example: "HealthPal API is working perfectly! 🏥"
+ *                 version:
+ *                   type: string
+ *                   example: "1.0.0"
+ *                 timestamp:
+ *                   type: string
+ *                   example: "2025-10-25T23:25:00.000Z"
+ */
 
 app.get('/api/health', (req, res) => {
   res.json({ 
