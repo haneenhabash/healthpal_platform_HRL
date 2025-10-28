@@ -1,4 +1,5 @@
 const { Consultation, Patient, Doctor } = require('../models');
+const { Op } = require('sequelize');
 
 exports.createConsultation = async (req, res) => {
   try {
@@ -8,6 +9,21 @@ exports.createConsultation = async (req, res) => {
     if (!patient || !doctor) {
       return res.status(404).json({ message: 'Doctor or Patient not found' });
     }
+const conflict = await Consultation.findOne({
+  where: {
+    date,
+    [Op.or]: [
+      { DoctorId },
+      { PatientId }
+    ]
+  }
+});
+
+if (conflict) {
+  return res.status(400).json({
+    message: 'Time conflict: either the doctor or the patient already has a consultation at this time'
+  });
+}
 
     const consultation = await Consultation.create({
       date,
