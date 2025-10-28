@@ -38,12 +38,16 @@ const sequelize = require('../config/db');
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING,
-      unique: true,
-      validate: {
-        isEmail: true
-      }
-    },
+  type: DataTypes.STRING,
+  allowNull: false,
+  unique: {
+    name: 'doctors_email_unique',
+    msg: 'Email must be unique'
+  },
+  validate: {
+    isEmail: true
+  }
+},
     phone: {
       type: DataTypes.STRING,
       allowNull: true
