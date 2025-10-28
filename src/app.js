@@ -12,10 +12,19 @@ app.use(cors());
 app.use(express.json());
 swaggerDocs(app);
 
+const doctorRoutes = require('./routes/doctorRoutes');
+app.use('/api/doctors', doctorRoutes);
 
 
 const patientRoutes = require('./routes/patientRoutes');
 app.use('/api/patients', patientRoutes);
+
+
+const consultationRoutes = require('./routes/consultationRoutes');
+app.use('/api/consultations', consultationRoutes);
+
+
+
 /**
  * @swagger
  * /api/health:
