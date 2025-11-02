@@ -5,10 +5,33 @@ const Patient = require('./Patient');
 const Doctor = require('./Doctor');
 
 const Consultation = sequelize.define('Consultation', {
-  date: { type: DataTypes.DATE, allowNull: false },
-  type: { type: DataTypes.STRING, defaultValue: 'video' }, // video or audio
-  status: { type: DataTypes.STRING, defaultValue: 'pending' },
-  notes: { type: DataTypes.TEXT },
+  date: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    validate: {
+      isDate: true,
+      notNull: { msg: 'Consultation date is required' }
+    }
+  },
+  type: {
+    type: DataTypes.ENUM('video', 'audio', 'message'),
+    allowNull: false,
+    defaultValue: 'video',
+    validate: {
+      isIn: {
+        args: [['video', 'audio', 'message']],
+        msg: 'Consultation type must be video, audio, or message'
+      }
+    }
+  },
+  status: {
+    type: DataTypes.ENUM('pending', 'approved', 'completed', 'cancelled'),
+    defaultValue: 'pending'
+  },
+  notes: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  }
 });
 
 Consultation.belongsTo(Patient);

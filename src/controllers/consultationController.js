@@ -18,12 +18,18 @@ const conflict = await Consultation.findOne({
     ]
   }
 });
-
+const validTypes = ['video', 'audio', 'message'];
+if (!validTypes.includes(type)) {
+  return res.status(400).json({ message: 'Invalid consultation type. Must be video, audio, or message.' });
+}
 if (conflict) {
   return res.status(400).json({
     message: 'Time conflict: either the doctor or the patient already has a consultation at this time'
   });
 }
+
+
+
 
     const consultation = await Consultation.create({
       date,
@@ -91,3 +97,17 @@ exports.updateStatus = async (req, res) => {
     res.status(500).json({ message: 'Error updating status', error: error.message });
   }
 };
+
+exports.deleteConsultation = async (req, res) => {
+  try {
+    const consultation = await Consultation.findByPk(req.params.id);
+    if (!consultation)
+      return res.status(404).json({ message: 'Consultation not found' });
+
+    await consultation.destroy();
+    res.json({ message: 'Consultation deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting consultation', error: error.message });
+  }
+};
+

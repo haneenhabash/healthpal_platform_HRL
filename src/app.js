@@ -23,6 +23,8 @@ app.use('/api/patients', patientRoutes);
 const consultationRoutes = require('./routes/consultationRoutes');
 app.use('/api/consultations', consultationRoutes);
 
+const messageRoutes = require('./routes/messageRoutes');
+app.use('/api/messages', messageRoutes);
 
 
 /**
