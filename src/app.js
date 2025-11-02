@@ -27,6 +27,10 @@ const messageRoutes = require('./routes/messageRoutes');
 app.use('/api/messages', messageRoutes);
 
 
+const healthGuideRoutes = require('./routes/healthGuideRoutes');
+app.use('/api/education/guides', healthGuideRoutes);
+
+
 /**
  * @swagger
  * /api/health:
