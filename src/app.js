@@ -30,6 +30,14 @@ app.use('/api/messages', messageRoutes);
 const healthGuideRoutes = require('./routes/healthGuideRoutes');
 app.use('/api/education/guides', healthGuideRoutes);
 
+const publicAlertRoutes = require('./routes/publicAlertRoutes');
+app.use('/api/alerts', publicAlertRoutes);
+
+const workshopRoutes = require('./routes/workshopRoutes');
+const registrationRoutes = require('./routes/registrationRoutes');
+
+app.use('/api/workshops', workshopRoutes);
+app.use('/api/registrations', registrationRoutes);
 
 /**
  * @swagger

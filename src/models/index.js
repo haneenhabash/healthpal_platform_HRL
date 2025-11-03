@@ -3,5 +3,9 @@ const Doctor = require('./Doctor');
 const Consultation = require('./Consultation');
 const Message = require('./message');
 const HealthGuide=require('./HealthGuide');
-module.exports = { Patient, Doctor, Consultation, Message, HealthGuide};
+const PublicAlert = require('./PublicAlert');
+const Workshop=require('./Workshop');
+const Registration=require('./Registration')
+module.exports = { Patient, Doctor, Consultation, Message, HealthGuide, PublicAlert ,Workshop,Registration};
+
 
