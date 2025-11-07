@@ -40,6 +40,7 @@ const sequelize = require('../config/db');
     email: {
   type: DataTypes.STRING,
   allowNull: false,
+  
   unique: {
     name: 'doctors_email_unique',
     msg: 'Email must be unique'

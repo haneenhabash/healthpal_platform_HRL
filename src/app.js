@@ -23,11 +23,13 @@ app.use('/api/patients', patientRoutes);
 const consultationRoutes = require('./routes/consultationRoutes');
 app.use('/api/consultations', consultationRoutes);
 
+const messageRoutes = require('./routes/messageRoutes');
+app.use('/api/messages', messageRoutes);
+
 app.use('/api/TreatmentCase', require('./routes/treatmentCaseRoutes'));
 app.use('/api/donations', require('./routes/donationRoutes'));
 app.use('/api/donors', require('./routes/donorRoutes'));
 app.use('/api/transparency', require('./routes/transparencyRoutes'));
-
 /**
  * @swagger
  * /api/health:
