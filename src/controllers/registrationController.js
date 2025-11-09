@@ -1,16 +1,17 @@
 const { Workshop, Registration, Patient } = require('../models');
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+const path = require('path');
 
 exports.registerForWorkshop = async (req, res) => {
   try {
     const { WorkshopId, PatientId, name, email, phone } = req.body;
 
-    const workshop = await Workshop.findByPk(WorkshopId, {
-      include: [Registration]
-    });
+    const workshop = await Workshop.findByPk(WorkshopId);
     if (!workshop) return res.status(404).json({ message: 'Workshop not found' });
 
-    const count = workshop.Registrations.length;
-    if (count >= workshop.maxParticipants)
+    const currentCount = await Registration.count({ where: { WorkshopId } });
+    if (currentCount >= workshop.maxParticipants)
       return res.status(400).json({ message: 'Workshop is full' });
 
     const alreadyRegistered = await Registration.findOne({
@@ -35,24 +36,75 @@ exports.registerForWorkshop = async (req, res) => {
 
 exports.updateRegistration = async (req, res) => {
   try {
-    const registration = await Registration.findByPk(req.params.id);
+    const registration = await Registration.findByPk(req.params.id, {
+      include: [Workshop]
+    });
     if (!registration) return res.status(404).json({ message: 'Registration not found' });
 
     await registration.update(req.body);
 
-    if (req.body.rating) {
-      const allRegs = await Registration.findAll({
-        where: { WorkshopId: registration.WorkshopId, rating: { [require('sequelize').Op.not]: null } }
-      });
-      const avg =
-        allRegs.reduce((sum, r) => sum + r.rating, 0) / allRegs.length;
-      const workshop = await Workshop.findByPk(registration.WorkshopId);
-      workshop.averageRating = parseFloat(avg.toFixed(2));
-      await workshop.save();
+    if (req.body.attendance === true) {
+      const workshop = registration.Workshop;
+
+      const certDir = path.resolve(__dirname, '..', 'certificates');
+      if (!fs.existsSync(certDir)) fs.mkdirSync(certDir, { recursive: true });
+
+      const certPath = path.join(
+        certDir,
+        `certificate_${registration.id}_${registration.name.replace(/\s+/g, '_')}.pdf`
+      );
+
+      const doc = new PDFDocument({ size: 'A4', margin: 50 });
+      const stream = fs.createWriteStream(certPath);
+      doc.pipe(stream);
+
+      doc.rect(25, 25, 545, 792).stroke('#6AB7FF');
+      doc.font('Helvetica-Bold').fillColor('#2B4C7E');
+      doc.moveDown(4);
+      doc.fontSize(26).fillColor('#0D47A1').text('Certificate of Attendance', { align: 'center' });
+      doc.moveDown(2);
+      doc.fontSize(16).fillColor('#000').text('This is to certify that', { align: 'center' });
+      doc.moveDown(1.5);
+      doc.fontSize(22).fillColor('#1565C0').text(`${registration.name}`, { align: 'center' });
+      doc.moveDown(1.5);
+      doc.fontSize(15).fillColor('#333')
+        .text(`has successfully attended the workshop "${workshop.title}"`, { align: 'center' })
+        .moveDown(0.5)
+        .text(`conducted by ${workshop.speaker}`, { align: 'center' });
+      doc.moveDown(2);
+      doc.fontSize(12).fillColor('#444')
+        .text(`Date: ${new Date(workshop.date).toDateString()}`, { align: 'center' });
+
+      const certId = `HP-${String(workshop.id).padStart(3, '0')}-${String(registration.id).padStart(4, '0')}`;
+      doc.moveDown(1);
+      doc.fontSize(11).fillColor('#777')
+        .text(`Certificate ID: ${certId}`, { align: 'center' });
+
+      doc.moveDown(5);
+      doc.fontSize(12).fillColor('#2B4C7E').text('_____________________________', { align: 'center' });
+      doc.text('HealthPal Team', { align: 'center' });
+      doc.end();
+
+      registration.certificateUrl = `/certificates/${path.basename(certPath)}`;
+      await registration.save();
+
+      const { sendEmail } = require('../utils/emailService');
+      await sendEmail(
+        registration.email,
+        'Your HealthPal Workshop Certificate 🎓',
+        `Hi ${registration.name},\n\nHere is your certificate for attending "${workshop.title}".\n\nBest regards,\nHealthPal Team`,
+        [
+          {
+            filename: path.basename(certPath),
+            path: certPath
+          }
+        ]
+      );
     }
 
     res.json({ message: 'Registration updated', registration });
   } catch (error) {
+    console.error('❌ Error updating registration:', error.message);
     res.status(500).json({ message: 'Error updating registration', error: error.message });
   }
 };

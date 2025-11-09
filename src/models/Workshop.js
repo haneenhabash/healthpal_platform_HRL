@@ -1,4 +1,3 @@
-// src/models/Workshop.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
@@ -17,7 +16,7 @@ const Workshop = sequelize.define('Workshop', {
     allowNull: false,
     validate: {
       isDate: true,
-      isAfter: new Date().toISOString(), // لا يمكن تاريخ سابق
+      isAfter: new Date().toISOString(), 
     }
   },
   locationType: {
