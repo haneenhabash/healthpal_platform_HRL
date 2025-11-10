@@ -25,4 +25,5 @@ sequelize.authenticate()
   })
   .catch(err => console.log('❌ DB error:', err));
 
+
 module.exports = sequelize;

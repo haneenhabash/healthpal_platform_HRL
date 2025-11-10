@@ -8,5 +8,23 @@ const TreatmentCase = require('./TreatmentCase');
 const Donation = require('./Donation');
 const Invoice = require('./Invoice');
 
-module.exports = { Patient, Doctor, Consultation, Message,Donor,TreatmentCase,Donation,Invoice };
+const Medicine = require('./Medicine');
+const Equipment = require('./Equipment');
+const Request = require('./Request');
+const ItemDonation = require('./ItemDonation');
+
+module.exports = { 
+    Patient, 
+    Doctor,
+     Consultation,
+      Message,
+      Donor,
+      TreatmentCase,
+      Donation,
+      Invoice,
+      Medicine,
+      Equipment,
+      Request,
+      ItemDonation
+     };
 

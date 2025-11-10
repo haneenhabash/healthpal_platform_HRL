@@ -30,6 +30,24 @@ app.use('/api/TreatmentCase', require('./routes/treatmentCaseRoutes'));
 app.use('/api/donations', require('./routes/donationRoutes'));
 app.use('/api/donors', require('./routes/donorRoutes'));
 app.use('/api/transparency', require('./routes/transparencyRoutes'));
+
+const requestRoutes = require('./routes/requestRoutes');
+app.use('/api/requests', requestRoutes);
+
+const medicineRoutes = require('./routes/medicineRoutes');
+app.use('/api/medicines', medicineRoutes);
+
+const equipmentRoutes = require('./routes/equipmentRoutes');
+app.use('/api/equipments', equipmentRoutes);
+
+
+const itemDonationRoutes = require('./routes/itemDonationRoutes');
+app.use('/api/item-donations', itemDonationRoutes);
+
+const volunteerRoutes = require('./routes/volunteerRoutes');
+app.use('/api/volunteers', volunteerRoutes);
+
+
 /**
  * @swagger
  * /api/health:
