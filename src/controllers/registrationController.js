@@ -2,23 +2,56 @@ const { Workshop, Registration, Patient } = require('../models');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
+const Joi = require('joi');
+
+const registerSchema = Joi.object({
+  WorkshopId: Joi.number().integer().positive().required(),
+  PatientId: Joi.number().integer().positive().allow(null),
+  name: Joi.string().min(3).max(255).required(),
+  email: Joi.string().email().required(),
+  phone: Joi.string().min(6).max(30).required()
+});
+
+const updateRegistrationSchema = Joi.object({
+  WorkshopId: Joi.number().integer().positive(),
+  PatientId: Joi.number().integer().positive().allow(null),
+  name: Joi.string().min(3).max(255),
+  email: Joi.string().email(),
+  phone: Joi.string().min(6).max(30),
+  attendance: Joi.boolean()
+}).min(1);
+
+const idSchema = Joi.object({
+  id: Joi.number().integer().positive().required()
+});
 
 exports.registerForWorkshop = async (req, res) => {
   try {
-    const { WorkshopId, PatientId, name, email, phone } = req.body;
+    const { error, value } = registerSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    const { WorkshopId, PatientId, name, email, phone } = value;
 
     const workshop = await Workshop.findByPk(WorkshopId);
-    if (!workshop) return res.status(404).json({ message: 'Workshop not found' });
+    if (!workshop) {
+      return res.status(404).json({ message: 'Workshop not found' });
+    }
 
     const currentCount = await Registration.count({ where: { WorkshopId } });
-    if (currentCount >= workshop.maxParticipants)
+    if (currentCount >= workshop.maxParticipants) {
       return res.status(400).json({ message: 'Workshop is full' });
+    }
 
     const alreadyRegistered = await Registration.findOne({
       where: { WorkshopId, email }
     });
-    if (alreadyRegistered)
-      return res.status(400).json({ message: 'You are already registered for this workshop' });
+    if (alreadyRegistered) {
+      return res
+        .status(400)
+        .json({ message: 'You are already registered for this workshop' });
+    }
 
     const registration = await Registration.create({
       WorkshopId,
@@ -28,25 +61,50 @@ exports.registerForWorkshop = async (req, res) => {
       phone
     });
 
-    res.status(201).json({ message: 'Registered successfully', registration });
+    return res
+      .status(201)
+      .json({ message: 'Registered successfully', registration });
   } catch (error) {
-    res.status(500).json({ message: 'Error registering', error: error.message });
+    if (error.name === 'SequelizeValidationError') {
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: error.errors.map((e) => e.message)
+      });
+    }
+
+    console.error('Error registering:', error.message);
+    return res
+      .status(500)
+      .json({ message: 'Error registering', error: error.message });
   }
 };
 
 exports.updateRegistration = async (req, res) => {
   try {
-    const registration = await Registration.findByPk(req.params.id, {
+    const { error: idError, value: idValue } = idSchema.validate(req.params);
+    if (idError) {
+      return res.status(400).json({ message: idError.details[0].message });
+    }
+
+    const { error, value } = updateRegistrationSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    const registration = await Registration.findByPk(idValue.id, {
       include: [Workshop]
     });
-    if (!registration) return res.status(404).json({ message: 'Registration not found' });
 
-    await registration.update(req.body);
+    if (!registration) {
+      return res.status(404).json({ message: 'Registration not found' });
+    }
 
-    if (req.body.attendance === true) {
+    await registration.update(value);
+
+    if (value.attendance === true) {
       const workshop = registration.Workshop;
 
-      const certDir = path.resolve(__dirname, '..', 'certificates');
+      const certDir = path.resolve(__dirname, '.', 'certificates');
       if (!fs.existsSync(certDir)) fs.mkdirSync(certDir, { recursive: true });
 
       const certPath = path.join(
@@ -61,27 +119,52 @@ exports.updateRegistration = async (req, res) => {
       doc.rect(25, 25, 545, 792).stroke('#6AB7FF');
       doc.font('Helvetica-Bold').fillColor('#2B4C7E');
       doc.moveDown(4);
-      doc.fontSize(26).fillColor('#0D47A1').text('Certificate of Attendance', { align: 'center' });
+      doc
+        .fontSize(26)
+        .fillColor('#0D47A1')
+        .text('Certificate of Attendance', { align: 'center' });
       doc.moveDown(2);
-      doc.fontSize(16).fillColor('#000').text('This is to certify that', { align: 'center' });
+      doc
+        .fontSize(16)
+        .fillColor('#000')
+        .text('This is to certify that', { align: 'center' });
       doc.moveDown(1.5);
-      doc.fontSize(22).fillColor('#1565C0').text(`${registration.name}`, { align: 'center' });
+      doc
+        .fontSize(22)
+        .fillColor('#1565C0')
+        .text(`${registration.name}`, { align: 'center' });
       doc.moveDown(1.5);
-      doc.fontSize(15).fillColor('#333')
-        .text(`has successfully attended the workshop "${workshop.title}"`, { align: 'center' })
+      doc
+        .fontSize(15)
+        .fillColor('#333')
+        .text(
+          `has successfully attended the workshop "${workshop.title}"`,
+          { align: 'center' }
+        )
         .moveDown(0.5)
         .text(`conducted by ${workshop.speaker}`, { align: 'center' });
       doc.moveDown(2);
-      doc.fontSize(12).fillColor('#444')
-        .text(`Date: ${new Date(workshop.date).toDateString()}`, { align: 'center' });
+      doc
+        .fontSize(12)
+        .fillColor('#444')
+        .text(`Date: ${new Date(workshop.date).toDateString()}`, {
+          align: 'center'
+        });
 
-      const certId = `HP-${String(workshop.id).padStart(3, '0')}-${String(registration.id).padStart(4, '0')}`;
+      const certId = `HP-${String(workshop.id).padStart(3, '0')}-${String(
+        registration.id
+      ).padStart(4, '0')}`;
       doc.moveDown(1);
-      doc.fontSize(11).fillColor('#777')
+      doc
+        .fontSize(11)
+        .fillColor('#777')
         .text(`Certificate ID: ${certId}`, { align: 'center' });
 
       doc.moveDown(5);
-      doc.fontSize(12).fillColor('#2B4C7E').text('_____________________________', { align: 'center' });
+      doc
+        .fontSize(12)
+        .fillColor('#2B4C7E')
+        .text('_____________________________', { align: 'center' });
       doc.text('HealthPal Team', { align: 'center' });
       doc.end();
 
@@ -102,9 +185,19 @@ exports.updateRegistration = async (req, res) => {
       );
     }
 
-    res.json({ message: 'Registration updated', registration });
+    return res.json({ message: 'Registration updated', registration });
   } catch (error) {
-    console.error('❌ Error updating registration:', error.message);
-    res.status(500).json({ message: 'Error updating registration', error: error.message });
+    if (error.name === 'SequelizeValidationError') {
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: error.errors.map((e) => e.message)
+      });
+    }
+
+    console.error('Error updating registration:', error.message);
+    return res.status(500).json({
+      message: 'Error updating registration',
+      error: error.message
+    });
   }
 };
