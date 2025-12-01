@@ -46,6 +46,13 @@ app.use('/api/workshops', workshopRoutes);
 app.use('/api/registrations', registrationRoutes);
 app.use('/api/environment', environmentRoutes);
 
+
+const userRoutes = require('./routes/userRoutes');
+const authRoutes=require('./routes/authRoutes');
+
+app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+
 swaggerDocs(app);
 
 app.get('/api/health', (req, res) => {
