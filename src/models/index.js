@@ -5,7 +5,10 @@ const Message = require('./message');
 const HealthGuide=require('./HealthGuide');
 const PublicAlert = require('./PublicAlert');
 const Workshop=require('./Workshop');
-const Registration=require('./Registration')
-module.exports = { Patient, Doctor, Consultation, Message, HealthGuide, PublicAlert ,Workshop,Registration};
+const Registration=require('./Registration');
+const User = require('./User');
+
+
+module.exports = { Patient, Doctor, Consultation, Message, HealthGuide, PublicAlert ,Workshop,Registration,User};
 
 
