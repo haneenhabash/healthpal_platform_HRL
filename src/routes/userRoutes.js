@@ -1,7 +1,7 @@
 // routes/userRoutes.js
 const express = require('express');
 const { protect, restrictTo } = require('../middlewares/authMiddleware');
-const { getMe, getAllUsers } = require('../controllers/userController');
+const { getMe, getAllUsers, getAdmins } = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -109,5 +109,24 @@ router.get(
     });
   }
 );
+
+/**
+ * @swagger
+ * /api/users/admins:
+ *   get:
+ *     summary: Get all admins (admin only)
+ *     description: Returns a list of users with role = admin.
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of admins
+ *       401:
+ *         description: Not authorized
+ *       403:
+ *         description: Forbidden
+ */
+router.get('/admins', protect, restrictTo('admin'), getAdmins);
 
 module.exports = router;

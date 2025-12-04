@@ -6,7 +6,7 @@ const swaggerDocs = require('./swagger');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
-
+const path = require("path");
 const app = express();
 
 app.use(helmet());
@@ -35,7 +35,7 @@ const publicAlertRoutes = require('./routes/publicAlertRoutes');
 const workshopRoutes = require('./routes/workshopRoutes');
 const registrationRoutes = require('./routes/registrationRoutes');
 const environmentRoutes = require('./routes/environmentRoutes');
-
+const dashboardRoutes = require('./routes/dashboardRoutes'); 
 app.use('/api/doctors', doctorRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/consultations', consultationRoutes);
@@ -45,13 +45,17 @@ app.use('/api/alerts', publicAlertRoutes);
 app.use('/api/workshops', workshopRoutes);
 app.use('/api/registrations', registrationRoutes);
 app.use('/api/environment', environmentRoutes);
+app.use('/api/dashboard', dashboardRoutes); 
 
-
+const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes=require('./routes/authRoutes');
 
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes); 
+
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 swaggerDocs(app);
 
@@ -97,3 +101,4 @@ async function startServer() {
 }
 
 startServer();
+module.exports = app;

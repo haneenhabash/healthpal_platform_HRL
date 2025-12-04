@@ -104,7 +104,8 @@ exports.updateRegistration = async (req, res) => {
     if (value.attendance === true) {
       const workshop = registration.Workshop;
 
-      const certDir = path.resolve(__dirname, '.', 'certificates');
+      // ✅ نخزن الشهادات في src/certificates (نطلع من controllers لمجلد src ثم certificates)
+      const certDir = path.join(__dirname, '..', 'certificates');
       if (!fs.existsSync(certDir)) fs.mkdirSync(certDir, { recursive: true });
 
       const certPath = path.join(
@@ -168,6 +169,7 @@ exports.updateRegistration = async (req, res) => {
       doc.text('HealthPal Team', { align: 'center' });
       doc.end();
 
+      // ✅ URL للمتصفح (ما في ../)
       registration.certificateUrl = `/certificates/${path.basename(certPath)}`;
       await registration.save();
 

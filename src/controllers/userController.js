@@ -1,5 +1,5 @@
 // controllers/userController.js
-const User = require('../models/User');
+const { User } = require('../models'); 
 
 exports.getMe = async (req, res) => {
   const user = req.user;
@@ -20,4 +20,21 @@ exports.getAllUsers = async (req, res) => {
     count: users.length,
     users,
   });
+};
+
+exports.getAdmins = async (req, res) => {
+  try {
+    const admins = await User.findAll({
+    where: { role: 'admin' },
+    attributes: ['id', 'email', 'role', 'createdAt'],
+    });
+
+    res.status(200).json({
+      count: admins.length,
+      admins,
+    });
+  } catch (err) {
+    console.error('Error in getAdmins:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
 };

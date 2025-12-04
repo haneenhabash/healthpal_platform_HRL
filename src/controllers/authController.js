@@ -60,19 +60,27 @@ exports.login = async (req, res) => {
     }
 
     const token = generateToken(user.id);
+  let dashboardUrl;
+    if (user.role === 'admin') {
+      dashboardUrl = '/api/dashboard/admin';
+    } else {
+      dashboardUrl = '/api/dashboard/me';
+    }
 
     res.status(200).json({
-      message: 'Logged in successfully',
+      message: 'Login successfully',
       token,
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.role
-      }
+      role: user.role,
+      dashboardUrl
     });
 
-  } catch (err) {
-    console.error('Login Error:', err);
-    res.status(500).json({ message: 'Server error' });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+
+
+
+   
