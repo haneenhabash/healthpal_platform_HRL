@@ -16,7 +16,27 @@ const options = {
         description: "Development server",
       },
     ],
+    tags: [
+      // { name: "Doctors", description: "Doctor management endpoints" },
+      // { name: "Patients", description: "Patient management endpoints" },
+      // { name: "Consultations", description: "Medical consultation endpoints" },
+      { name: "Treatment Cases", description: "Medical cases for donation" },
+      { name: "Donations", description: "Donation and sponsorship operations" },
+      { name: "Donors", description: "Donor profiles and contributions" },
+      { name: "Transparency & Impact", description: "Invoices, receipts, and donor visibility" },
+      { name: "Mental Assessments", description: "Mental health & trauma support" },
+      { name: "Anonymous Therapy Chat", description: "Anonymous therapy chat system" },
+      { name: "Payments", description: "Stripe / Payment API" },
+      // { name: "System", description: "System & health-related endpoints" },
+    ],
   },
+
+
+
+
+
+
+
   apis: [__dirname + "/routes/*.js", __dirname + "/app.js"],
 };
 
