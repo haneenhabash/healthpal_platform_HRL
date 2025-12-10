@@ -18,6 +18,12 @@ const Journal = require('./Journal');
 const AnonymousChat = require('./AnonymousChat');
 const PrivateMessage = require('./PrivateMessage');
 const Consultation = require('./Consultation');
+const Message = require('./message');
+const HealthGuide=require('./HealthGuide');
+const PublicAlert = require('./PublicAlert');
+const Workshop=require('./Workshop');
+const Registration=require('./Registration');
+const User = require('./User');
 
 // Community & Groups
 const SupportGroup = require('./SupportGroup');
@@ -30,13 +36,7 @@ const Donation = require('./Donation');
 const ExpenseRecord = require('./ExpenseRecord');
 const Invoice = require('./Invoice');
 
-// ===============================================
-// 2. Define Associations (Relationships)
-// ===============================================
 
-// ------------------------------------
-// A. Mental Health Module
-// ------------------------------------
 
 // Patient <-> Mental Assessments (One-to-Many)
 Patient.hasMany(MentalAssessment, { foreignKey: 'patientId', as: 'assessments' });
@@ -46,9 +46,6 @@ MentalAssessment.belongsTo(Patient, { foreignKey: 'patientId', as: 'patient' });
 Patient.hasMany(Journal, { foreignKey: 'patientId', as: 'journals' });
 Journal.belongsTo(Patient, { foreignKey: 'patientId', as: 'patient' });
 
-// ------------------------------------
-// B. Anonymous Chat System
-// ------------------------------------
 
 // Doctor <-> Anonymous Chat (One-to-Many)
 Doctor.hasMany(AnonymousChat, { foreignKey: 'doctorId' });
@@ -141,5 +138,13 @@ module.exports = {
     TreatmentCase,
     Donation,
     Invoice,
-    ExpenseRecord
+    ExpenseRecord,
+      Message,
+  HealthGuide,
+  PublicAlert ,
+  Workshop,
+  Registration,
+   User
+  
 };
+

@@ -48,6 +48,7 @@ const Doctor = sequelize.define('Doctor', {
     unique: {
       name: 'doctors_email_unique',
       msg: 'Email must be unique'
+
     },
     validate: {
       isEmail: true

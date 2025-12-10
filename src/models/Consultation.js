@@ -15,23 +15,39 @@ const Consultation = sequelize.define('Consultation', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  date: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  type: {
-    type: DataTypes.STRING,
-    defaultValue: 'video'
-  },
+  
   status: {
     type: DataTypes.ENUM('pending', 'scheduled', 'completed', 'cancelled'),
     defaultValue: 'pending'
   },
-  notes: {
-    type: DataTypes.TEXT
-  }
+  
 }, {
   timestamps: true
+
+  date: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    validate: {
+      isDate: true,
+      notNull: { msg: 'Consultation date is required' }
+    }
+  },
+  type: {
+    type: DataTypes.ENUM('video', 'audio', 'message'),
+    allowNull: false,
+    defaultValue: 'video',
+    validate: {
+      isIn: {
+        args: [['video', 'audio', 'message']],
+        msg: 'Consultation type must be video, audio, or message'
+      }
+    }
+  },
+
+  notes: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  }
 });
 
 module.exports = Consultation;
