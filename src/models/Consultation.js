@@ -15,15 +15,10 @@ const Consultation = sequelize.define('Consultation', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  
   status: {
     type: DataTypes.ENUM('pending', 'scheduled', 'completed', 'cancelled'),
     defaultValue: 'pending'
   },
-  
-}, {
-  timestamps: true
-
   date: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -43,11 +38,13 @@ const Consultation = sequelize.define('Consultation', {
       }
     }
   },
-
   notes: {
     type: DataTypes.TEXT,
     allowNull: true
   }
+}, {
+  // Options go here as the second argument
+  timestamps: true
 });
 
 module.exports = Consultation;
