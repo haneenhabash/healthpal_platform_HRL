@@ -7,6 +7,7 @@ const path = require('path');
 
 
 require('./models/index');
+const chatRoutes = require('./routes/chatbotRoutes');
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.use('/api/donors', require('./routes/donorRoutes'));
 app.use('/api/transparency', require('./routes/transparencyRoutes'));
 app.use('/api/trauma', require('./routes/traumaRoutes'));
 app.use('/api/chat', require('./routes/chatRoutes'));
+app.use("/api/chat", chatRoutes); // Chatbot routes
+
 const paymentRoutes = require('./routes/paymentRoutes');
 
 app.use('/api/payments', paymentRoutes);

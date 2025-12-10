@@ -10,6 +10,7 @@ const options = {
       version: "1.0.0",
       description: "API documentation for HealthPal clinical management system",
     },
+
     servers: [
       {
         url: "http://localhost:3000",
