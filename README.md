@@ -1,6 +1,6 @@
 # 🏥 HealthPal - Digital Healthcare Platform
+<img width="1632" height="640" alt="Gemini_Generated_Image_n6tsuin6tsuin6ts" src="https://github.com/user-attachments/assets/2a4ce5ed-5fe3-45a2-92fa-0e532b3d8ad1" />
 
-<img width="1024" height="386" alt="Gemini_Generated_Image_66y4o466y4o466y4" src="https://github.com/user-attachments/assets/aa7ecf74-3068-407e-b118-6ef9a32c52e6" />
 
 ![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
