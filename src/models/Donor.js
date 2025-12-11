@@ -13,7 +13,11 @@ const Donor = sequelize.define('Donor', {
     password: { type: DataTypes.STRING, allowNull: false },
     phone: { type: DataTypes.STRING },
     address: { type: DataTypes.TEXT },
-    isActive: { type: DataTypes.BOOLEAN, defaultValue: true }
+    isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
+     donorType: {
+    type: DataTypes.ENUM('ngo', 'pharmacy', 'hospital', 'private donor', 'volunteer'),
+    allowNull: false,
+    defaultValue: 'private donor'}
 });
 
 module.exports = Donor;

@@ -13,6 +13,14 @@ const Equipment = require('./Equipment');
 const Request = require('./Request');
 const ItemDonation = require('./ItemDonation');
 
+const NGO = require('./NGO');
+const NGOActivity = require('./NGOActivity');
+const Availability = require('./Availability');
+const Appointment = require('./Appointment');
+
+
+
+
 module.exports = { 
     Patient, 
     Doctor,
@@ -25,6 +33,10 @@ module.exports = {
       Medicine,
       Equipment,
       Request,
-      ItemDonation
+      ItemDonation,
+      Availability,
+      Appointment,
+      NGO,
+      NGOActivity
      };
 

@@ -47,6 +47,22 @@ app.use('/api/item-donations', itemDonationRoutes);
 const volunteerRoutes = require('./routes/volunteerRoutes');
 app.use('/api/volunteers', volunteerRoutes);
 
+const ngoRoutes = require('./routes/ngoRoutes');
+app.use('/api/ngos', ngoRoutes);
+
+app.use("/api/activities", require("./routes/ngoActivityRoutes"));
+
+
+const availabilityRoutes = require('./routes/availabilityRoutes');
+app.use('/api/availabilities', availabilityRoutes);
+
+const appointmentRoutes = require('./routes/appointmentRoutes');
+app.use('/api/appointments', appointmentRoutes);
+
+require('./cron/activityNotifier');
+require('./utils/sendEmail');
+
+
 
 /**
  * @swagger

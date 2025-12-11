@@ -3,7 +3,7 @@ const { Donor } = require('../models');
 
 exports.createDonor = async (req, res) => {
     try {
-        const { name, email, password, phone, address } = req.body;
+        const { name, email, password, phone, address, donorType } = req.body;
 
 
         const donor = await Donor.create({
@@ -11,7 +11,8 @@ exports.createDonor = async (req, res) => {
             email,
             password,
             phone,
-            address
+            address,
+            donorType
         });
 
         res.status(201).json({
@@ -21,7 +22,8 @@ exports.createDonor = async (req, res) => {
                 id: donor.id,
                 name: donor.name,
                 email: donor.email,
-                phone: donor.phone
+                phone: donor.phone,
+                donorType: donor.donorType
             }
         });
 
