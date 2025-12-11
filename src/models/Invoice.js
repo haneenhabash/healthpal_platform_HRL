@@ -1,4 +1,3 @@
-// src/models/Invoice.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 

@@ -1,32 +1,40 @@
 const { Consultation, Patient, Doctor } = require('../models');
 const { Op } = require('sequelize');
+const Joi = require('joi');
+
+const consultationSchema = Joi.object({
+  date: Joi.date().required(),
+  type: Joi.string().valid('video', 'audio', 'message').required(),
+  PatientId: Joi.number().integer().required(),
+  DoctorId: Joi.number().integer().required(),
+  notes: Joi.string().allow('', null)
+});
 
 exports.createConsultation = async (req, res) => {
   try {
-    const { date, type, PatientId, DoctorId, notes } = req.body;
+    const { error, value } = consultationSchema.validate(req.body);
+    if (error) return res.status(400).json({ message: error.details[0].message });
+
+    const { date, type, PatientId, DoctorId, notes } = value;
+
     const patient = await Patient.findByPk(PatientId);
     const doctor = await Doctor.findByPk(DoctorId);
     if (!patient || !doctor) {
       return res.status(404).json({ message: 'Doctor or Patient not found' });
     }
-const conflict = await Consultation.findOne({
-  where: {
-    date,
-    [Op.or]: [
-      { DoctorId },
-      { PatientId }
-    ]
-  }
-});
-const validTypes = ['video', 'audio', 'message'];
-if (!validTypes.includes(type)) {
-  return res.status(400).json({ message: 'Invalid consultation type. Must be video, audio, or message.' });
-}
-if (conflict) {
-  return res.status(400).json({
-    message: 'Time conflict: either the doctor or the patient already has a consultation at this time'
-  });
-}
+
+    const conflict = await Consultation.findOne({
+      where: {
+        date,
+        [Op.or]: [{ DoctorId }, { PatientId }]
+      }
+    });
+
+    if (conflict) {
+      return res.status(400).json({
+        message: 'Time conflict: either the doctor or the patient already has a consultation at this time'
+      });
+    }
 
 
 
@@ -41,8 +49,8 @@ if (conflict) {
     });
 
     res.status(201).json({ message: 'Consultation booked successfully', consultation });
+
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error creating consultation', error: error.message });
   }
 };
@@ -101,8 +109,7 @@ exports.updateStatus = async (req, res) => {
 exports.deleteConsultation = async (req, res) => {
   try {
     const consultation = await Consultation.findByPk(req.params.id);
-    if (!consultation)
-      return res.status(404).json({ message: 'Consultation not found' });
+    if (!consultation) return res.status(404).json({ message: 'Consultation not found' });
 
     await consultation.destroy();
     res.json({ message: 'Consultation deleted successfully' });
@@ -110,4 +117,3 @@ exports.deleteConsultation = async (req, res) => {
     res.status(500).json({ message: 'Error deleting consultation', error: error.message });
   }
 };
-

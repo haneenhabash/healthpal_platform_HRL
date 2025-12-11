@@ -1,5 +1,5 @@
 // src/controllers/treatmentCaseController.js
-const { TreatmentCase, Patient, Donation, Donor } = require('../models');
+const { TreatmentCase, Patient, Donation, Donor, ExpenseRecord } = require('../models');
 
 exports.getActiveCases = async (req, res) => {
     try {
@@ -113,4 +113,50 @@ exports.verifyCase = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
+    // Get Transparency Data for a specific case
+    exports.getCaseTransparencyData = async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            const treatmentCase = await TreatmentCase.findByPk(id, {
+                include: [
+                    // 1. Get Expenses (Invoices)
+                    { model: ExpenseRecord, as: 'expenses' },
+                    // 2. Get Patient Feedback (Already in your model as JSON or relation)
+                ]
+            });
+
+            if (!treatmentCase) return res.status(404).json({ message: 'Case not found' });
+
+            res.json({
+                caseTitle: treatmentCase.title,
+                totalRaised: treatmentCase.amountRaised,
+                expenses: treatmentCase.expenses, // List of invoices
+                feedbacks: treatmentCase.patientFeedback, // "Thank you" messages
+                recoveryUpdates: treatmentCase.recoveryUpdates // Recovery timeline
+            });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    };
+
+    // Admin: Upload Expense Record
+    exports.addExpenseRecord = async (req, res) => {
+        try {
+            const { id } = req.params; // Case ID
+            const { title, amount, imageUrl, description } = req.body;
+
+            const expense = await ExpenseRecord.create({
+                treatmentCaseId: id,
+                title,
+                amount,
+                imageUrl,
+                description
+            });
+
+            res.status(201).json({ message: 'Expense record added', expense });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    };
 };

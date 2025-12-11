@@ -1,5 +1,6 @@
 const { Message, Consultation, Doctor, Patient } = require('../models');
 const dns = require('dns').promises;
+const Joi = require('joi');
 
 async function checkInternetConnection() {
   try {
@@ -12,18 +13,17 @@ async function checkInternetConnection() {
 
 async function translateOnline(text, fromLang, toLang) {
   try {
-  const translatorModule = await import('@vitalets/google-translate-api');
-const translate = translatorModule.default?.translate || translatorModule.default || translatorModule;
-
-
-    console.log(` Trying to translate: "${text}" (${fromLang} ➜ ${toLang})`);
+    const translatorModule = await import('@vitalets/google-translate-api');
+    const translate =
+      translatorModule.default?.translate ||
+      translatorModule.default ||
+      translatorModule;
 
     const res = await translate(text, {
       from: fromLang.slice(0, 2).toLowerCase(),
       to: toLang.slice(0, 2).toLowerCase()
     });
 
-    console.log(`Translation success: ${res.text}`);
     return res.text;
   } catch (err) {
     console.error('Google Translate failed:', err.message);
@@ -31,14 +31,28 @@ const translate = translatorModule.default?.translate || translatorModule.defaul
   }
 }
 
-
 async function translateOffline(text, fromLang, toLang) {
   return `[${toLang} translation of: ${text}]`;
 }
 
+const sendMessageSchema = Joi.object({
+  content: Joi.string().min(1).required(),
+  senderType: Joi.string().valid('patient', 'doctor').required(),
+  ConsultationId: Joi.number().integer().positive().required()
+});
+
+const consultationIdSchema = Joi.object({
+  consultationId: Joi.number().integer().positive().required()
+});
+
 exports.sendMessage = async (req, res) => {
   try {
-    const { content, senderType, ConsultationId } = req.body;
+    const { error, value } = sendMessageSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    const { content, senderType, ConsultationId } = value;
 
     const consultation = await Consultation.findByPk(ConsultationId, {
       include: [Doctor, Patient]
@@ -48,7 +62,9 @@ exports.sendMessage = async (req, res) => {
       return res.status(404).json({ message: 'Consultation not found' });
 
     if (consultation.type !== 'message')
-      return res.status(400).json({ message: 'This consultation is not a messaging type' });
+      return res
+        .status(400)
+        .json({ message: 'This consultation is not a messaging type' });
 
     const doctorLang = consultation.Doctor.language || 'Arabic';
     const patientLang = consultation.Patient.language || 'Arabic';
@@ -85,19 +101,28 @@ exports.sendMessage = async (req, res) => {
       mode: hasInternet ? 'online translation' : 'offline fallback'
     });
   } catch (error) {
-    console.error(' Error in sendMessage:', error.message);
-    res.status(500).json({ message: 'Error sending message', error: error.message });
+    console.error('Error in sendMessage:', error.message);
+    res
+      .status(500)
+      .json({ message: 'Error sending message', error: error.message });
   }
 };
 
 exports.getMessagesByConsultation = async (req, res) => {
   try {
+    const { error, value } = consultationIdSchema.validate(req.params);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
     const messages = await Message.findAll({
-      where: { ConsultationId: req.params.consultationId },
+      where: { ConsultationId: value.consultationId },
       order: [['timestamp', 'ASC']]
     });
     res.json(messages);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching messages', error: error.message });
+    res
+      .status(500)
+      .json({ message: 'Error fetching messages', error: error.message });
   }
 };

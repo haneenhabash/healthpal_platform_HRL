@@ -64,7 +64,16 @@ const TreatmentCase = sequelize.define('TreatmentCase', {
     },
     recoveryUpdates: {
         type: DataTypes.JSON
+    },
+    transactionId: {
+        type: DataTypes.STRING,
+        allowNull: true // It might be null for cash donations
+    },
+    paymentMethod: {
+        type: DataTypes.STRING,
+        defaultValue: 'stripe'
     }
+
 }, {
     tableName: 'TreatmentCase',
     timestamps: true

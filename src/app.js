@@ -1,35 +1,104 @@
-
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const morgan = require('morgan');
+
+// Database and Config
 const sequelize = require('./config/db');
 const swaggerDocs = require('./swagger');
-require('./models/donationRelations');
+require('./models/index');
+
+// Route Imports
+const chatRoutes = require('./routes/chatbotRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
+const patientRoutes = require('./routes/patientRoutes');
+const consultationRoutes = require('./routes/consultationRoutes');
+const messageRoutes = require('./routes/messageRoutes');
+const healthGuideRoutes = require('./routes/healthGuideRoutes');
+const publicAlertRoutes = require('./routes/publicAlertRoutes');
+const workshopRoutes = require('./routes/workshopRoutes');
+const registrationRoutes = require('./routes/registrationRoutes');
+const environmentRoutes = require('./routes/environmentRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
+const treatmentCaseRoutes = require('./routes/treatmentCaseRoutes');
+const donationRoutes = require('./routes/donationRoutes');
+const donorRoutes = require('./routes/donorRoutes');
+const transparencyRoutes = require('./routes/transparencyRoutes');
+const traumaRoutes = require('./routes/traumaRoutes');
+const generalChatRoutes = require('./routes/chatRoutes'); // Renamed to distinguish from chatbot
+const paymentRoutes = require('./routes/paymentRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
-app.use(cors());
+// --- Middleware ---
+
+// Security Headers
+app.use(helmet());
+
+// CORS
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*'
+}));
+
+// Body Parsing
 app.use(express.json());
+
+// Logging
+app.use(morgan('dev'));
+
+// Static Files (Uploads)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Rate Limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message: { message: 'Too many requests, please try again later.' }
+});
+app.use('/api/', apiLimiter);
+
+// --- Routes ---
+
+app.use('/api/doctors', doctorRoutes);
+app.use('/api/patients', patientRoutes);
+app.use('/api/consultations', consultationRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/education/guides', healthGuideRoutes);
+app.use('/api/alerts', publicAlertRoutes);
+app.use('/api/workshops', workshopRoutes);
+app.use('/api/registrations', registrationRoutes);
+app.use('/api/environment', environmentRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+
+app.use('/api/TreatmentCase', treatmentCaseRoutes);
+app.use('/api/donations', donationRoutes);
+app.use('/api/donors', donorRoutes);
+app.use('/api/transparency', transparencyRoutes);
+app.use('/api/trauma', traumaRoutes);
+
+// Chat Routes
+// Note: You had two routes pointing to '/api/chat'. I have separated them.
+app.use('/api/chat', generalChatRoutes); // General messaging
+app.use('/api/chatbot', chatRoutes);     // AI Chatbot (Changed path to avoid conflict)
+
+app.use('/api/payments', paymentRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+
+// Static Files (Frontend)
+app.use(express.static(path.join(__dirname, "..", "public")));
+
+// Initialize Swagger (Call this only once)
 swaggerDocs(app);
 
-const doctorRoutes = require('./routes/doctorRoutes');
-app.use('/api/doctors', doctorRoutes);
 
-
-const patientRoutes = require('./routes/patientRoutes');
-app.use('/api/patients', patientRoutes);
-
-
-const consultationRoutes = require('./routes/consultationRoutes');
-app.use('/api/consultations', consultationRoutes);
-
-const messageRoutes = require('./routes/messageRoutes');
-app.use('/api/messages', messageRoutes);
-
-app.use('/api/TreatmentCase', require('./routes/treatmentCaseRoutes'));
-app.use('/api/donations', require('./routes/donationRoutes'));
-app.use('/api/donors', require('./routes/donorRoutes'));
-app.use('/api/transparency', require('./routes/transparencyRoutes'));
 
 const requestRoutes = require('./routes/requestRoutes');
 app.use('/api/requests', requestRoutes);
@@ -92,6 +161,7 @@ require('./utils/sendEmail');
  *                   example: "2025-10-25T23:25:00.000Z"
  */
 
+// Health Check Endpoint
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK 👌',
@@ -107,23 +177,46 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// --- Error Handling ---
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error('ERROR STACK:', err.stack);
+
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal server error';
+
+  res.status(statusCode).json({
+    status: 'error',
+    message: message,
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+  });
+});
+
+// --- Server Startup ---
+
 async function startServer() {
   try {
     await sequelize.authenticate();
     console.log('✅ Database connected successfully!');
 
+    // careful with sync({ alter: true }) in production, it modifies schema
     await sequelize.sync({ alter: true });
-    console.log(' All tables are created or updated!');
+    console.log('✅ All tables are created or updated!');
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
-      console.log(` HealthPal API running on http://localhost:${PORT}`);
-      console.log(` Check health: http://localhost:${PORT}/api/health`);
+      console.log(`🚀 HealthPal API running on http://localhost:${PORT}`);
+      console.log(`📘 Check health: http://localhost:${PORT}/api/health`);
+      console.log(`📄 Swagger Docs: http://localhost:${PORT}/api-docs`);
     });
 
   } catch (err) {
-    console.error(' Database connection failed:', err);
+    console.error('❌ Database connection failed:', err);
+    process.exit(1); // Exit process on DB failure
   }
 }
 
 startServer();
+
+module.exports = app;

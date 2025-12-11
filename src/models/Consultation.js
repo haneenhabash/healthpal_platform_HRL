@@ -1,10 +1,24 @@
-// src/models/Consultation.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const Patient = require('./Patient');
-const Doctor = require('./Doctor');
 
 const Consultation = sequelize.define('Consultation', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  doctorId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  patientId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  status: {
+    type: DataTypes.ENUM('pending', 'scheduled', 'completed', 'cancelled'),
+    defaultValue: 'pending'
+  },
   date: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -24,17 +38,13 @@ const Consultation = sequelize.define('Consultation', {
       }
     }
   },
-  status: {
-    type: DataTypes.ENUM('pending', 'approved', 'completed', 'cancelled'),
-    defaultValue: 'pending'
-  },
   notes: {
     type: DataTypes.TEXT,
     allowNull: true
   }
+}, {
+  // Options go here as the second argument
+  timestamps: true
 });
-
-Consultation.belongsTo(Patient);
-Consultation.belongsTo(Doctor);
 
 module.exports = Consultation;
