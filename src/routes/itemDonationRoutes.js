@@ -19,14 +19,14 @@ const itemDonationController = require('../controllers/itemDonationController');
  *             properties:
  *               donorId:
  *                 type: integer
- *                 description: ID of the donor making the donation
+ *                 description: "ID of the donor making the donation"
  *               itemType:
  *                 type: string
  *                 enum: [medicine, equipment, other]
  *                 description: Type of item being donated
  *               itemId:
  *                 type: integer
- *                 description: Optional: ID of the specific item if already exists in inventory
+ *                 description: "Optional: ID of the specific item if already exists in inventory"
  *               itemName:
  *                 type: string
  *                 description: Name of the donated item
@@ -40,7 +40,7 @@ const itemDonationController = require('../controllers/itemDonationController');
  *                 description: Type of donation
  *               requestId:
  *                 type: integer
- *                 description: Optional: ID of a patient request to match this donation to
+ *                 description: "Optional: ID of a patient request to match this donation to"
  *             required:
  *               - donorId
  *               - itemType

@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const availabilityController = require('../controllers/availabilityController');
 
+/**
+ * @swagger
+ * tags:
+ *   name: Availability
+ *   description: Doctor availability management APIs
+ */
+
 
 /**
  * @swagger
@@ -49,6 +56,24 @@ const availabilityController = require('../controllers/availabilityController');
  *         description: Invalid input
  */
 router.post('/', availabilityController.addAvailability);
+
+
+/**
+ * @swagger
+ * /api/availabilities:
+ *   get:
+ *     summary: Get all doctor availabilities
+ *     tags: [Availability]
+ *     responses:
+ *       200:
+ *         description: List of all availabilities with doctor info
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Availability'
+ */
 router.get('/', availabilityController.getAllAvailabilities);
 router.get('/:id', availabilityController.getAvailabilityById);
 router.get('/search', availabilityController.getAvailabilitiesByCriteria);
