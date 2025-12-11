@@ -9,7 +9,6 @@ const morgan = require('morgan');
 // Database and Config
 const sequelize = require('./config/db');
 const swaggerDocs = require('./swagger');
-require('./models/index');
 
 // Route Imports
 const chatRoutes = require('./routes/chatbotRoutes');
@@ -97,6 +96,8 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 // Initialize Swagger (Call this only once)
 swaggerDocs(app);
+
+app.use('/api/profile', require('./routes/profileRoutes'));
 
 
 
