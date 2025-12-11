@@ -65,13 +65,15 @@ The system is designed to be **scalable**, **secure**, and **user-centric**, ens
 ## 💡 Technology Stack & Justification
 
 We chose the following technologies based on scalability, security, and maintainability requirements:
-
 | Technology | Role | Justification |
 | :--- | :--- | :--- |
 | **Node.js** | Core Language & Runtime | **Scalable:** Event-driven, non-blocking I/O ideal for real-time applications.<br>**JavaScript Everywhere:** Single language for both frontend and backend. |
 | **Express.js** | Backend Framework | **Efficiency:** Minimal and flexible framework for building REST APIs.<br>**Middleware Support:** Easy integration for authentication, logging, and error handling. |
-| **Gemeni API** | Weather & Wind Data | Provides accurate and up-to-date weather and wind information for the system. |
+| **Gemeni API** | Chatbot Integration | Provides real-time responses and AI-based interactions for the chatbot. |
+| **Weather API** | Weather & Wind Data | Supplies accurate weather and wind information for users. |
+| **Stripe API** | Payment Integration | Secure and standard solution for handling international credit card donations/payments. |
 | **MySQL** | Database | **Reliability:** ACID compliance ensures data integrity.<br>**Relational:** Handles structured data like users, transactions, or readings effectively. |
+| **ORMs (e.g., Sequelize)** | Database Abstraction | Simplifies database interactions, protects against SQL injection, and eases CRUD operations. |
 | **Authentication (Auth)** | Security | Implements secure login and role-based access control to protect sensitive data. |
 
 ---
