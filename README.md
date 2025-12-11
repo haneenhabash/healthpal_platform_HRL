@@ -1,14 +1,18 @@
 # 🏥 HealthPal - Digital Healthcare Platform
-<img width="1632" height="640" alt="Gemini_Generated_Image_n6tsuin6tsuin6ts" src="https://github.com/user-attachments/assets/2a4ce5ed-5fe3-45a2-92fa-0e532b3d8ad1" />
+<img width="1632" height="640" alt="Gemini_Generated_Image_cp07smcp07smcp07" src="https://github.com/user-attachments/assets/88a7ff48-df61-4e6e-a771-a8b1919906ff" />
 
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Sequelize](https://img.shields.io/badge/ORM-6CCFF6?style=for-the-badge&logo=sequelize&logoColor=white)
-
+![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=jwt&logoColor=yellow)
+![OAuth](https://img.shields.io/badge/OAuth-4285F4?style=for-the-badge&logo=oauth&logoColor=white)
+![Helmet](https://img.shields.io/badge/Helmet-5A5A5A?style=for-the-badge&logo=helmet&logoColor=white)
 
 > **Course:** Advanced Software Engineering
+
 > **Instructor:** Dr. Amjad AbuHassan  
 
 ---
