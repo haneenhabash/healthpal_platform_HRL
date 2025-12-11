@@ -2,10 +2,10 @@
 <img width="1632" height="640" alt="Gemini_Generated_Image_n6tsuin6tsuin6ts" src="https://github.com/user-attachments/assets/2a4ce5ed-5fe3-45a2-92fa-0e532b3d8ad1" />
 
 
-![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-18-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-4.18-000000?style=for-the-badge&logo=express&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Maven](https://img.shields.io/badge/Maven-Project-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
+![Sequelize](https://img.shields.io/badge/ORM-Sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
 
 > **Course:** Project – RESTful API’s – Fall 2025  
 > **Instructor:** Dr. Amjad AbuHassan  
