@@ -1,5 +1,5 @@
 # 🏥 HealthPal - Digital Healthcare Platform
-<img width="1632" height="640" alt="Gemini_Generated_Image_cp07smcp07smcp07" src="https://github.com/user-attachments/assets/88a7ff48-df61-4e6e-a771-a8b1919906ff" />
+<img width="1024" height="402" alt="Gemini_Generated_Image_cp07smcp07smcp07-artguru" src="https://github.com/user-attachments/assets/37514699-40b3-43fe-9292-7790b2e1ace1" />
 
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
