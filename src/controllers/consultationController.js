@@ -36,6 +36,9 @@ exports.createConsultation = async (req, res) => {
       });
     }
 
+
+
+
     const consultation = await Consultation.create({
       date,
       type,

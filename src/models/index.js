@@ -8,6 +8,7 @@ const { DataTypes } = require('sequelize');
 // Users & Profiles
 const Patient = require('./Patient');
 const Doctor = require('./Doctor');
+
 const Donor = require('./Donor');
 
 // Mental Health & Logs
@@ -35,6 +36,19 @@ const TreatmentCase = require('./TreatmentCase');
 const Donation = require('./Donation');
 const ExpenseRecord = require('./ExpenseRecord');
 const Invoice = require('./Invoice');
+
+const Medicine = require('./Medicine');
+const Equipment = require('./Equipment');
+const Request = require('./Request');
+const ItemDonation = require('./ItemDonation');
+
+const NGO = require('./NGO');
+const NGOActivity = require('./NGOActivity');
+const Availability = require('./Availability');
+const Appointment = require('./Appointment');
+
+
+
 
 
 
@@ -144,7 +158,15 @@ module.exports = {
   PublicAlert ,
   Workshop,
   Registration,
-   User
+   User,
+    Medicine,
+      Equipment,
+      Request,
+      ItemDonation,
+      Availability,
+      Appointment,
+      NGO,
+      NGOActivity
   
 };
 

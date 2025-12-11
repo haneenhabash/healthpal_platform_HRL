@@ -4,7 +4,7 @@ const { Donor } = require('../models');
 // 1. Create Donor (Registration)
 exports.createDonor = async (req, res) => {
     try {
-        const { name, email, password, phone, address } = req.body;
+        const { name, email, password, phone, address, donorType } = req.body;
 
         // Check if email exists
         const existingDonor = await Donor.findOne({ where: { email } });
@@ -12,12 +12,25 @@ exports.createDonor = async (req, res) => {
             return res.status(400).json({ error: 'Email already exists' });
         }
 
-        const donor = await Donor.create({ name, email, password, phone, address });
+        const donor = await Donor.create({
+            name,
+            email,
+            password,
+            phone,
+            address,
+            donorType
+        });
 
         res.status(201).json({
             success: true,
             message: 'Donor created successfully!',
-            donor: { id: donor.id, name: donor.name, email: donor.email }
+            donor: {
+                id: donor.id,
+                name: donor.name,
+                email: donor.email,
+                phone: donor.phone,
+                donorType: donor.donorType
+            }
         });
     } catch (error) {
         res.status(400).json({ error: error.message });
