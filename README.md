@@ -68,12 +68,11 @@ We chose the following technologies based on scalability, security, and maintain
 
 | Technology | Role | Justification |
 | :--- | :--- | :--- |
-| **Java 17** | Core Language | Strongly typed, robust, and widely used in enterprise-level healthcare systems. |
-| **Spring Boot** | Backend Framework | **Efficiency:** Reduces boilerplate code.<br>**Security:** Built-in Spring Security for Role-Based Access Control (RBAC).<br>**Ecosystem:** Seamless integration with Data JPA and Web MVC. |
-| **MySQL** | Database | **Reliability:** ACID compliance ensures data integrity for sensitive medical and financial transactions.<br>**Relational:** Perfect for handling complex relationships (Doctor-Patient-Appointment). |
-| **Hibernate / JPA** | ORM | Simplifies database interactions and protects against SQL injection. |
-| **Lombok** | Library | Improves code readability by auto-generating getters, setters, and builders. |
-| **Stripe API** | External Integration | Secure and standard solution for handling international credit card donations. |
+| **Node.js** | Core Language & Runtime | **Scalable:** Event-driven, non-blocking I/O ideal for real-time applications.<br>**JavaScript Everywhere:** Single language for both frontend and backend. |
+| **Express.js** | Backend Framework | **Efficiency:** Minimal and flexible framework for building REST APIs.<br>**Middleware Support:** Easy integration for authentication, logging, and error handling. |
+| **Gemeni API** | Weather & Wind Data | Provides accurate and up-to-date weather and wind information for the system. |
+| **MySQL** | Database | **Reliability:** ACID compliance ensures data integrity.<br>**Relational:** Handles structured data like users, transactions, or readings effectively. |
+| **Authentication (Auth)** | Security | Implements secure login and role-based access control to protect sensitive data. |
 
 ---
 
