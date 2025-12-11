@@ -200,13 +200,12 @@ async function startServer() {
     await sequelize.authenticate();
     console.log('✅ Database connected successfully!');
 
-    // careful with sync({ alter: true }) in production, it modifies schema
-    await sequelize.sync({ alter: true });
-    console.log('✅ All tables are created or updated!');
-
+    // هذا الأمر سيقوم بحذف الجداول القديمة وإنشائها من جديد بشكل نظيف
+    await sequelize.sync({ alert: true });
+    console.log('✅ All tables synced successfully!');
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
-      console.log(`🚀 HealthPal API running on http://localhost:${PORT}`);
+      console.log(` HealthPal API running on http://localhost:${PORT}`);
       console.log(`📘 Check health: http://localhost:${PORT}/api/health`);
       console.log(`📄 Swagger Docs: http://localhost:${PORT}/api-docs`);
     });

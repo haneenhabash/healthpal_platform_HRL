@@ -2,6 +2,14 @@
 const express = require('express');
 const router = express.Router();
 const requestController = require('../controllers/requestController');
+
+/**
+ * @swagger
+ * tags:
+ *   name: Requests
+ *   description: Users can request critical medications or equipments
+ */
+
 /**
  * @swagger
  * /requests:
@@ -18,14 +26,14 @@ const requestController = require('../controllers/requestController');
  *             properties:
  *               patientId:
  *                 type: integer
- *                 description: ID of the patient making the request
+ *                 description: "ID of the patient making the request"
  *               type:
  *                 type: string
  *                 enum: [medicine, equipment, other]
  *                 description: Type of item requested
  *               itemId:
  *                 type: integer
- *                 description: Optional: ID of the specific item if already exists in inventory
+ *                 description: "Optional: ID of the specific item if already exists in inventory"
  *               itemName:
  *                 type: string
  *                 description: Name of the requested item

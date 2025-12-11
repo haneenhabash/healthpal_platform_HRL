@@ -30,10 +30,11 @@ const Donor = sequelize.define('Donor', {
         type: DataTypes.TEXT
     },
 
-     donorType: {
-    type: DataTypes.ENUM('ngo', 'pharmacy', 'hospital', 'private donor', 'volunteer'),
-    allowNull: false,
-    defaultValue: 'private donor'}
+    donorType: {
+        type: DataTypes.ENUM('ngo', 'pharmacy', 'hospital', 'private donor', 'volunteer'),
+        allowNull: false,
+        defaultValue: 'private donor'
+    },
 
     isActive: {
         type: DataTypes.BOOLEAN,

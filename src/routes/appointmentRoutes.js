@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const appointmentController = require('../controllers/appointmentController');
 
-console.log('🔥 appointmentRoutes CLEAN loaded');
 
 router.put('/test', (req, res) => {
   res.json({ message: "PUT TEST WORKS" });
