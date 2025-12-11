@@ -73,7 +73,7 @@ We chose the following technologies based on scalability, security, and maintain
 | **Weather API** | Weather & Wind Data | Supplies accurate weather and wind information for users. |
 | **Stripe API** | Payment Integration | Secure and standard solution for handling international credit card donations/payments. |
 | **MySQL** | Database | **Reliability:** ACID compliance ensures data integrity.<br>**Relational:** Handles structured data like users, transactions, or readings effectively. |
-| **ORMs (e.g., Sequelize)** | Database Abstraction | Simplifies database interactions, protects against SQL injection, and eases CRUD operations. |
+| **ORMs ( Sequelize)** | Database Abstraction | Simplifies database interactions, protects against SQL injection, and eases CRUD operations. |
 | **Authentication (Auth)** | Security | Implements secure login and role-based access control to protect sensitive data. |
 
 ---
