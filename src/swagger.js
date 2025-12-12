@@ -35,8 +35,13 @@ const options = {
       { name: "Treatment Cases", description: "Medical cases for donation" },
       { name: "Donations", description: "Donation and sponsorship operations" },
       { name: "Donors", description: "Donor profiles and contributions" },
+      { name: "Equipment", description: " Essential Equipment Tracker" },
       { name: "Requests", description: " Users can request critical medications or equipments" },
       { name: "Item Donations", description: "Create a new item donation (either crowdsourced or matched to a patient request)" },
+      { name: "Volunteers", description: " Volunteers fulfill the matched requests to deliver them to patients" },
+      { name: "NGO", description: " Integrate with medical NGOs doing fieldwork" },
+      { name: "NGO Activities", description: "Activities management and notification" },
+      
       { name: "Transparency & Impact", description: "Invoices, receipts, and donor visibility" },
       { name: "Mental Assessments", description: "Mental health & trauma support" },
       { name: "Anonymous Therapy Chat", description: "Anonymous therapy chat system" },
