@@ -1,4 +1,4 @@
-const { sequelize } = require('../config/db');
+const sequelize = require('../config/db');
 const { DataTypes } = require('sequelize');
 
 // ===============================================
@@ -20,10 +20,10 @@ const AnonymousChat = require('./AnonymousChat');
 const PrivateMessage = require('./PrivateMessage');
 const Consultation = require('./Consultation');
 const Message = require('./message');
-const HealthGuide=require('./HealthGuide');
+const HealthGuide = require('./HealthGuide');
 const PublicAlert = require('./PublicAlert');
-const Workshop=require('./Workshop');
-const Registration=require('./Registration');
+const Workshop = require('./Workshop');
+const Registration = require('./Registration');
 const User = require('./User');
 
 // Community & Groups
@@ -142,36 +142,36 @@ Consultation.belongsTo(Patient, { foreignKey: 'patientId' });
 console.log('✅ All model associations defined successfully!');
 
 module.exports = {
-    sequelize,
-    Patient,
-    Doctor,
-    MentalAssessment,
-    Journal,
-    AnonymousChat,
-    PrivateMessage,
-    SupportGroup,
-    GroupSession,
-    GroupMessage,
-    Consultation,
-    Donor,
-    TreatmentCase,
-    Donation,
-    Invoice,
-    ExpenseRecord,
-      Message,
+  sequelize,
+  Patient,
+  Doctor,
+  MentalAssessment,
+  Journal,
+  AnonymousChat,
+  PrivateMessage,
+  SupportGroup,
+  GroupSession,
+  GroupMessage,
+  Consultation,
+  Donor,
+  TreatmentCase,
+  Donation,
+  Invoice,
+  ExpenseRecord,
+  Message,
   HealthGuide,
-  PublicAlert ,
+  PublicAlert,
   Workshop,
   Registration,
-   User,
-    Medicine,
-      Equipment,
-      Request,
-      ItemDonation,
-      Availability,
-      Appointment,
-      NGO,
-      NGOActivity
-  
+  User,
+  Medicine,
+  Equipment,
+  Request,
+  ItemDonation,
+  Availability,
+  Appointment,
+  NGO,
+  NGOActivity
+
 };
 

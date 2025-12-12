@@ -11,7 +11,7 @@ const chatController = require('../controllers/chatbotController');
 
 /**
  * @swagger
- * /api/chat/ask:
+ * /api/chatbot/ask:
  *   post:
  *     summary: Send a message to the HealthPal AI Assistant
  *     description: Sends a user prompt to the AI and returns a response related to general health, mental wellness, donations, or services in Palestine.
