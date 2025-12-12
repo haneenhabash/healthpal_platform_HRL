@@ -4,6 +4,31 @@ const { protect, restrictTo } = require('../middlewares/authMiddleware');
 const { getMe, getAllUsers, getAdmins } = require('../controllers/userController');
 
 const router = express.Router();
+/**
+ * @swagger
+ * /api/users/me:
+ *   get:
+ *     summary: Get current logged-in user
+ *     description: Returns the profile of the currently authenticated user.
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Current user profile
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User profile fetched successfully
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Not authorized
+ */
 
 /**
  * @swagger

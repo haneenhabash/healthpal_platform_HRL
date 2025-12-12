@@ -5,20 +5,24 @@ const Joi = require('joi');
 const consultationSchema = Joi.object({
   date: Joi.date().required(),
   type: Joi.string().valid('video', 'audio', 'message').required(),
-  PatientId: Joi.number().integer().required(),
-  DoctorId: Joi.number().integer().required(),
+  patientId: Joi.number().integer().required(),
+  doctorId: Joi.number().integer().required(),
   notes: Joi.string().allow('', null)
 });
+
 
 exports.createConsultation = async (req, res) => {
   try {
     const { error, value } = consultationSchema.validate(req.body);
     if (error) return res.status(400).json({ message: error.details[0].message });
 
-    const { date, type, PatientId, DoctorId, notes } = value;
+const { date, type, patientId, doctorId, notes } = value;
 
-    const patient = await Patient.findByPk(PatientId);
-    const doctor = await Doctor.findByPk(DoctorId);
+
+   const patient = await Patient.findByPk(patientId);
+const doctor = await Doctor.findByPk(doctorId);
+
+
     if (!patient || !doctor) {
       return res.status(404).json({ message: 'Doctor or Patient not found' });
     }
@@ -26,7 +30,11 @@ exports.createConsultation = async (req, res) => {
     const conflict = await Consultation.findOne({
       where: {
         date,
-        [Op.or]: [{ DoctorId }, { PatientId }]
+       [Op.or]: [
+  { doctorId },
+  { patientId }
+]
+
       }
     });
 
@@ -37,16 +45,25 @@ exports.createConsultation = async (req, res) => {
     }
 
 
+const consultationDate = new Date(date);
+const now = new Date();
+
+if (consultationDate < now) {
+  return res.status(400).json({
+    message: 'Cannot book a consultation in the past'
+  });
+}
 
 
     const consultation = await Consultation.create({
-      date,
-      type,
-      PatientId,
-      DoctorId,
-      notes,
-      status: 'pending'
-    });
+  date,
+  type,
+  patientId,
+  doctorId,
+  notes,
+  status: 'pending'
+});
+
 
     res.status(201).json({ message: 'Consultation booked successfully', consultation });
 

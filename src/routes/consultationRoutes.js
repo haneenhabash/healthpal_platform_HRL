@@ -2,7 +2,7 @@
  * @swagger
  * tags:
  *   name: Consultations
- *   description: Manage doctor-patient consultations (booking, listing, and updates)
+ *   description: Manage doctor-patient consultations (booking, listing, and status management)
  */
 
 /**
@@ -29,7 +29,8 @@
  *           type: string
  *         language:
  *           type: string
- *           example: "Arabic"
+ *           example: Arabic
+ *
  *     Doctor:
  *       type: object
  *       properties:
@@ -39,7 +40,7 @@
  *           type: string
  *         specialty:
  *           type: string
- *           example: "pediatrics"
+ *           example: pediatrics
  *         locationType:
  *           type: string
  *           enum: [local, international]
@@ -50,9 +51,9 @@
  *           type: string
  *         language:
  *           type: string
- *           example: "Arabic"
  *         experienceYears:
  *           type: integer
+ *
  *     Consultation:
  *       type: object
  *       properties:
@@ -66,24 +67,25 @@
  *           enum: [video, audio, message]
  *         status:
  *           type: string
- *           enum: [pending, approved, completed, cancelled]
+ *           enum: [pending, scheduled, completed, cancelled]
  *         notes:
  *           type: string
- *         PatientId:
+ *         patientId:
  *           type: integer
- *         DoctorId:
+ *         doctorId:
  *           type: integer
  *         Patient:
  *           $ref: '#/components/schemas/Patient'
  *         Doctor:
  *           $ref: '#/components/schemas/Doctor'
+ *
  *     CreateConsultationRequest:
  *       type: object
  *       required:
  *         - date
  *         - type
- *         - PatientId
- *         - DoctorId
+ *         - patientId
+ *         - doctorId
  *       properties:
  *         date:
  *           type: string
@@ -92,16 +94,17 @@
  *         type:
  *           type: string
  *           enum: [video, audio, message]
- *           example: "message"
- *         PatientId:
+ *           example: video
+ *         patientId:
  *           type: integer
  *           example: 1
- *         DoctorId:
+ *         doctorId:
  *           type: integer
  *           example: 2
  *         notes:
  *           type: string
- *           example: "Follow-up in chat mode"
+ *           example: Initial consultation
+ *
  *     UpdateConsultationStatusRequest:
  *       type: object
  *       required:
@@ -109,14 +112,14 @@
  *       properties:
  *         status:
  *           type: string
- *           enum: [pending, approved, completed, cancelled]
- *           example: "completed"
- *     ConsultationWithMessage:
+ *           enum: [pending, scheduled, completed, cancelled]
+ *           example: scheduled
+ *
+ *     ConsultationResponse:
  *       type: object
  *       properties:
  *         message:
  *           type: string
- *           example: "Consultation booked successfully"
  *         consultation:
  *           $ref: '#/components/schemas/Consultation'
  */
@@ -139,7 +142,7 @@
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ConsultationWithMessage'
+ *               $ref: '#/components/schemas/ConsultationResponse'
  *       400:
  *         description: Validation error or time conflict
  *       404:
@@ -152,7 +155,7 @@
  * @swagger
  * /api/consultations:
  *   get:
- *     summary: Get all consultations (with patient and doctor details)
+ *     summary: Get all consultations
  *     tags: [Consultations]
  *     responses:
  *       200:
@@ -163,8 +166,6 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Consultation'
- *       500:
- *         description: Server error
  */
 
 /**
@@ -182,15 +183,7 @@
  *         description: Patient ID
  *     responses:
  *       200:
- *         description: List of consultations for the patient
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Consultation'
- *       500:
- *         description: Server error
+ *         description: Patient consultations
  */
 
 /**
@@ -208,15 +201,7 @@
  *         description: Doctor ID
  *     responses:
  *       200:
- *         description: List of consultations for the doctor
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Consultation'
- *       500:
- *         description: Server error
+ *         description: Doctor consultations
  */
 
 /**
@@ -231,7 +216,6 @@
  *         required: true
  *         schema:
  *           type: integer
- *         description: Consultation ID
  *     requestBody:
  *       required: true
  *       content:
@@ -240,15 +224,7 @@
  *             $ref: '#/components/schemas/UpdateConsultationStatusRequest'
  *     responses:
  *       200:
- *         description: Status updated
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ConsultationWithMessage'
- *       404:
- *         description: Consultation not found
- *       500:
- *         description: Server error
+ *         description: Status updated successfully
  */
 
 /**
@@ -263,23 +239,11 @@
  *         required: true
  *         schema:
  *           type: integer
- *         description: Consultation ID
  *     responses:
  *       200:
  *         description: Consultation deleted successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Consultation deleted successfully"
- *       404:
- *         description: Consultation not found
- *       500:
- *         description: Server error
  */
+
 const express = require('express');
 const router = express.Router();
 const consultationController = require('../controllers/consultationController');

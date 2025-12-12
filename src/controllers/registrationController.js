@@ -18,7 +18,9 @@ const updateRegistrationSchema = Joi.object({
   name: Joi.string().min(3).max(255),
   email: Joi.string().email(),
   phone: Joi.string().min(6).max(30),
-  attendance: Joi.boolean()
+  attendance: Joi.boolean(),
+  rating: Joi.number().integer().min(1).max(5),
+  feedback: Joi.string().max(1000)
 }).min(1);
 
 const idSchema = Joi.object({

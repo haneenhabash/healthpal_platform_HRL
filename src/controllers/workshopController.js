@@ -7,12 +7,15 @@ const createWorkshopSchema = Joi.object({
   description: Joi.string().min(5).allow('', null),
   category: Joi.string().min(2).max(100).required(),
   language: Joi.string().min(2).max(20).required(),
-  status: Joi.string().min(2).max(50).required(),
+  status: Joi.string().valid('upcoming', 'completed', 'cancelled').required(),
   date: Joi.date().required(),
   maxParticipants: Joi.number().integer().positive().required(),
   speaker: Joi.string().min(3).max(255).required(),
-  location: Joi.string().min(2).max(255).allow('', null)
+
+  locationType: Joi.string().valid('online', 'onsite').required(),
+  locationDetails: Joi.string().min(2).max(255).required()
 });
+
 
 const updateWorkshopSchema = Joi.object({
   title: Joi.string().min(3).max(255),

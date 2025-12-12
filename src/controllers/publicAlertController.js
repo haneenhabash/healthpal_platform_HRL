@@ -8,7 +8,7 @@ const createAlertSchema = Joi.object({
   region: Joi.string().min(2).max(100).required(),
   status: Joi.string().min(2).max(50).required(),
   severity: Joi.string().min(2).max(50).required(),
-  description: Joi.string().min(5).allow('', null),
+  content: Joi.string().min(5).allow('', null),
 });
 
 const updateAlertSchema = Joi.object({
@@ -17,7 +17,7 @@ const updateAlertSchema = Joi.object({
   region: Joi.string().min(2).max(100),
   status: Joi.string().min(2).max(50),
   severity: Joi.string().min(2).max(50),
-  description: Joi.string().min(5).allow('', null),
+  content: Joi.string().min(5).allow('', null),
 }).min(1);
 
 const querySchema = Joi.object({

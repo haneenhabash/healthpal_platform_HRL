@@ -22,7 +22,16 @@
 
 The system is designed to be **scalable**, **secure**, and **user-centric**, ensuring that humanitarian efforts reach those in need with precision and dignity.
 
----
+--- --- --- ---
+## 🚀 Live Demo
+Experience the HealthPal platform in action. You can check the live version here:  
+[View Live Demo](https://your-demo-link-goes-here.com)
+
+## 📚 API Documentation (Swagger)
+Explore the API endpoints, schemas, and test requests using Swagger UI:  
+[View Swagger Docs](https://effortless-pithivier-de0126.netlify.app/)
+
+
 
 ## 📑 Table of Contents
 - [Core Features](#-core-features)
@@ -96,46 +105,45 @@ The system follows a **Layered Architecture** (Controller -> Service -> Reposito
 Follow these steps to set up the project locally:
 
 ### Prerequisites
-*   Java Development Kit (JDK) 17+
-*   Maven installed
-*   MySQL Server running
+* Node.js – Required to run the backend server and API services.
+
+* MySQL Server – Used to store all application data, including patients, doctors, donations, and medications.
 
 ### Installation
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/YourUsername/HealthPal.git
-    cd HealthPal
-    ```
 
-2.  **Configure Database:**
-    *   Create a MySQL database named `healthpal_db`.
-    *   Update `src/main/resources/application.properties`:
-    ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/healthpal_db
-    spring.datasource.username=root
-    spring.datasource.password=your_password
-    spring.jpa.hibernate.ddl-auto=update
-    ```
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/haneenhabash/healthpal_platform_HRL.git
+   cd healthpal_platform_HRL
+   
+### 2. Configure Database
 
-3.  **Build and Run:**
-    ```bash
-    mvn clean install
-    mvn spring-boot:run
-    ```
+This project uses **MySQL** with **Sequelize** for ORM. Follow these steps to set up the database:
+
+ **Create a MySQL database**:
+
+```sql
+CREATE DATABASE healthpal_db;
+```
+3.  Install Dependencies:
+   ```
+npm install
+```
+5. Run the application:
+```
+npm start 
+```
 
 ---
-
 ## 📘 API Documentation
-We use **Postman** for API testing and documentation. The API collection includes examples for all endpoints (GET, POST, PUT, DELETE).
+We use **Postman** for comprehensive API testing and documentation. The collection includes detailed examples for all supported endpoints (GET, POST, PUT, DELETE).
 
-*   **Documentation Link:** [Insert Your Postman Collection Public Link Here]
-*   **Format:** JSON is used for all request and response bodies.
-
+*   **🚀 Access Postman Collection:** [View Documentation & Join Team](https://app.getpostman.com/join-team?invite_code=6db0b26124a453261f6b8a31a49af6e2090a311ac3e5510bbf1b13b1cbdc1cb0&target_code=e024aa914f2d0a51a8812094df937e86)
+*   **📦 Data Format:** All requests and responses are formatted in **JSON**.
 ---
 
 ## 🧪 Testing Strategy
 We implemented a robust testing strategy to ensure reliability:
-*   **Unit Testing:** Used **JUnit 5** and **Mockito** to test service logic in isolation.
 *   **Integration Testing:** Tested the interaction between Controllers and the Database.
 *   **Error Handling:** Implemented a global `@ControllerAdvice` to handle exceptions (e.g., `ResourceNotFound`, `InsufficientFunds`) gracefully.
 
