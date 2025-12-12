@@ -29,7 +29,7 @@ Experience the HealthPal platform in action. You can check the live version here
 
 ## 📚 API Documentation (Swagger)
 Explore the API endpoints, schemas, and test requests using Swagger UI:  
-[View Swagger Docs](https://effortless-pithivier-de0126.netlify.app)
+[View Swagger Docs](https://effortless-pithivier-de0126.netlify.app/)
 
 
 
