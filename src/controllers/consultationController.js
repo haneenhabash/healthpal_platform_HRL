@@ -18,6 +18,7 @@ exports.createConsultation = async (req, res) => {
 
 const { date, type, patientId, doctorId, notes } = value;
 
+
    const patient = await Patient.findByPk(patientId);
 const doctor = await Doctor.findByPk(doctorId);
 
@@ -44,6 +45,14 @@ const doctor = await Doctor.findByPk(doctorId);
     }
 
 
+const consultationDate = new Date(date);
+const now = new Date();
+
+if (consultationDate < now) {
+  return res.status(400).json({
+    message: 'Cannot book a consultation in the past'
+  });
+}
 
 
     const consultation = await Consultation.create({
