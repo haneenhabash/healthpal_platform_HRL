@@ -107,11 +107,11 @@ Follow these steps to set up the project locally:
    git clone https://github.com/haneenhabash/healthpal_platform_HRL.git
    cd healthpal_platform_HRL
    
-## 2. Configure Database
+### 2. Configure Database
 
 This project uses **MySQL** with **Sequelize** for ORM. Follow these steps to set up the database:
 
-1. **Create a MySQL database**:
+ **Create a MySQL database**:
 
 ```sql
 CREATE DATABASE healthpal_db;
