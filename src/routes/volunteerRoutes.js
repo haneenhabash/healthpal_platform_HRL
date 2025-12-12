@@ -12,7 +12,7 @@ router.get('/matched-requests', volunteerController.getMatchedRequests);
 
 /**
  * @swagger
- * /volunteers/deliver/{id}:
+ * /api/volunteers/deliver/{id}:
  *   put:
  *     summary: Mark a request as delivered
  *     tags:

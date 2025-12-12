@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const requestController = require('../controllers/requestController');
 
+
+
 /**
  * @swagger
  * tags:
@@ -12,7 +14,7 @@ const requestController = require('../controllers/requestController');
 
 /**
  * @swagger
- * /requests:
+ * /api/requests:
  *   post:
  *     summary: Create a new patient request
  *     tags:
@@ -56,7 +58,7 @@ router.post('/', requestController.createRequest);
 
 /**
  * @swagger
- * /requests:
+ * /api/requests:
  *   get:
  *     summary: Get all requests
  *     tags:
@@ -91,17 +93,18 @@ router.post('/', requestController.createRequest);
  *                     enum: [pending, approved, rejected, completed]
  *                   patient:
  *                     type: object
+ *                     nullable: true
  *                     description: Related patient information
  *       500:
  *         description: Server error while fetching requests
  */
 router.get('/', requestController.getAllRequests);
 
-router.get('/:id', requestController.getRequestById);
+
 
 /**
  * @swagger
- * /requests/status/{status}:
+ * /api/requests/status/{status}:
  *   get:
  *     summary: Get requests by status
  *     tags:
@@ -112,7 +115,7 @@ router.get('/:id', requestController.getRequestById);
  *         required: true
  *         schema:
  *           type: string
- *           enum: [pending, approved, rejected, completed]
+ *           enum: [pending, matched, cancelled, delivered]
  *         description: Status of the request
  *     responses:
  *       200:
@@ -125,9 +128,11 @@ router.get('/status/:status', requestController.getRequestsByStatus);
 
 router.get('/type/:type', requestController.getRequestsByType);
 
+router.get('/:id', requestController.getRequestById);
+
 /**
  * @swagger
- * /requests/{id}:
+ * /api/requests/{id}:
  *   put:
  *     summary: Update an existing request status
  *     tags:
@@ -170,7 +175,7 @@ router.put('/:id', requestController.updateRequest);
 
 /**
  * @swagger
- * /requests/{id}:
+ * /api/requests/{id}:
  *   delete:
  *     summary: Delete a request
  *     tags:
@@ -191,5 +196,7 @@ router.put('/:id', requestController.updateRequest);
  */
 
 router.delete('/:id', requestController.deleteRequest);
+
+
 
 module.exports = router;

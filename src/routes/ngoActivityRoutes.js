@@ -13,7 +13,7 @@ const controller = require("../controllers/ngoActivityController");
 
 /**
  * @swagger
- * /activities:
+ * /api/activities:
  *   post:
  *     summary: Create a new NGO activity
  *     tags:
@@ -63,7 +63,7 @@ const controller = require("../controllers/ngoActivityController");
 router.post("/", controller.createActivity);
 /**
  * @swagger
- * /activities/ngo/{ngoId}:
+ * /api/activities/ngo/{ngoId}:
  *   get:
  *     summary: Get all activities for a specific NGO
  *     tags:
@@ -86,7 +86,7 @@ router.put("/:id/status", controller.updateActivityStatus);
 
 /**
  * @swagger
- * /activities:
+ * /api/activities:
  *   get:
  *     summary: Get all NGO activities
  *     tags:

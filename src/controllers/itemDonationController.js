@@ -3,14 +3,17 @@ const { Medicine, Equipment, Request } = require('../models');
 
 exports.createDonation = async (req, res) => {
   try {
-    const { donorId, itemType, itemId, itemName, quantity, donationType, requestId } = req.body;
+       const { donorId, itemType, itemId, itemName, quantity, donationType, requestId } = req.body || {};
+    if (!donorId || !itemType || !itemName || !donationType) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
 
     const newDonation = await ItemDonation.create({
       donorId,
       itemType,
       itemId: itemId || null,
       itemName,
-      quantity,
+      quantity: quantity  || 1,
       donationType,
       requestId: requestId || null
     });

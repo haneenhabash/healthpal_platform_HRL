@@ -125,7 +125,6 @@ router.put('/:id/verify',ngoController.verifyNgo);
 
 router.get("/ngos", ngoController.getAllNGOs);
 
-router.get("/ngos", ngoController.getAllNGOs);
 
 router.get('/id/:id', ngoController.getNgoById);
 

@@ -5,7 +5,7 @@ const itemDonationController = require('../controllers/itemDonationController');
 
 /**
  * @swagger
- * /item-donations:
+ * /api/item-donations:
  *   post:
  *     summary: Create a new item donation (either crowdsourced or matched to a patient request)
  *     tags:

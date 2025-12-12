@@ -12,7 +12,7 @@ const availabilityController = require('../controllers/availabilityController');
 
 /**
  * @swagger
- * /availability:
+ * /api/availabilities:
  *   post:
  *     summary: Add a new availability slot for a doctor
  *     tags:
