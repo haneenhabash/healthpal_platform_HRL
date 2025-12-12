@@ -18,6 +18,7 @@ exports.getUserDashboard = async (req, res) => {
       dashboard: {
         links: {
           profile: "/api/users/me",
+          completeProfile: "/api/profile/complete-profile",
           consultations: "/api/consultations",
           workshops: "/api/workshops",
           healthGuides: "/api/education/guides",

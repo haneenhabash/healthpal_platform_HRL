@@ -19,8 +19,10 @@ const options = {
     ],
     tags: [
       { name: "Auth", description: "Authentication & authorization" },
-      { name: "Users", description: "User related endpoints" },
-      { name: "Admin", description: "Admin specific endpoints" },
+      { name: "Dashboard", description: "User & Admin dashboard endpoints" },
+            { name: "Doctors", description: "Doctors operations" },
+      { name: "Patients", description: "Patients operations" },
+
       { name: "Consultations", description: "Manage doctor-patient consultations (booking, listing, and updates)" },
       { name: "Availability", description: "Doctor availability management APIs" },
       { name: "Appointments", description: "Patients request appointments" },

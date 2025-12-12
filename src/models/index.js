@@ -130,9 +130,14 @@ Patient.hasMany(Consultation, { foreignKey: 'patientId' });
 Consultation.belongsTo(Patient, { foreignKey: 'patientId' });
 
 
+
+
+
 // ===============================================
 // 3. Export Models
 // ===============================================
+
+
 
 console.log('✅ All model associations defined successfully!');
 

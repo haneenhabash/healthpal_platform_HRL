@@ -1,3 +1,173 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Patients
+ *   description: Patients operations
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Patient:
+ *       type: object
+ *       required:
+ *         - name
+ *         - phone
+ *         - age
+ *         - gender
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: Sara Ahmad
+ *         email:
+ *           type: string
+ *           example: sara@mail.com
+ *         phone:
+ *           type: string
+ *           example: "+962788888888"
+ *         age:
+ *           type: integer
+ *           example: 30
+ *         gender:
+ *           type: string
+ *           enum: [male, female]
+ *         language:
+ *           type: string
+ *           example: Arabic
+ *         medicalHistory:
+ *           type: string
+ *           example: Diabetes, hypertension
+ */
+
+/**
+ * @swagger
+ * /api/patients:
+ *   get:
+ *     summary: Get all patients
+ *     tags: [Patients]
+ *     responses:
+ *       200:
+ *         description: List of patients
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/patients/{id}:
+ *   get:
+ *     summary: Get patient by ID
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Patient found
+ *       400:
+ *         description: Invalid ID
+ *       404:
+ *         description: Patient not found
+ */
+
+/**
+ * @swagger
+ * /api/patients:
+ *   post:
+ *     summary: Create a new patient
+ *     tags: [Patients]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Patient'
+ *     responses:
+ *       201:
+ *         description: Patient created successfully
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/patients/{id}:
+ *   put:
+ *     summary: Update patient by ID
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               age:
+ *                 type: integer
+ *               gender:
+ *                 type: string
+ *                 enum: [male, female]
+ *               language:
+ *                 type: string
+ *               medicalHistory:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Patient updated successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Patient not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/patients/{id}:
+ *   delete:
+ *     summary: Delete patient by ID
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Patient deleted successfully
+ *       400:
+ *         description: Invalid ID
+ *       404:
+ *         description: Patient not found
+ *       500:
+ *         description: Server error
+ */
 const express = require('express');
 const router = express.Router();
 const { Patient } = require('../models');
