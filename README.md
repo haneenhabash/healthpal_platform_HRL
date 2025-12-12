@@ -136,11 +136,10 @@ npm start
 
 ---
 ## 📘 API Documentation
-We use **Postman** for API testing and documentation. The API collection includes examples for all endpoints (GET, POST, PUT, DELETE).
+We use **Postman** for comprehensive API testing and documentation. The collection includes detailed examples for all supported endpoints (GET, POST, PUT, DELETE).
 
-*   **Documentation Link:** [https://app.getpostman.com/join-team?invite_code=6db0b26124a453261f6b8a31a49af6e2090a311ac3e5510bbf1b13b1cbdc1cb0&target_code=e024aa914f2d0a51a8812094df937e86]
-*   **Format:** JSON is used for all request and response bodies.
-
+*   **🚀 Access Postman Collection:** [View Documentation & Join Team](https://app.getpostman.com/join-team?invite_code=6db0b26124a453261f6b8a31a49af6e2090a311ac3e5510bbf1b13b1cbdc1cb0&target_code=e024aa914f2d0a51a8812094df937e86)
+*   **📦 Data Format:** All requests and responses are formatted in **JSON**.
 ---
 
 ## 🧪 Testing Strategy
