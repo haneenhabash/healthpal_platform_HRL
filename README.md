@@ -1,14 +1,18 @@
 # 🏥 HealthPal - Digital Healthcare Platform
-<img width="1632" height="640" alt="Gemini_Generated_Image_n6tsuin6tsuin6ts" src="https://github.com/user-attachments/assets/2a4ce5ed-5fe3-45a2-92fa-0e532b3d8ad1" />
+<img width="1024" height="402" alt="Gemini_Generated_Image_cp07smcp07smcp07-artguru" src="https://github.com/user-attachments/assets/37514699-40b3-43fe-9292-7790b2e1ace1" />
 
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Sequelize](https://img.shields.io/badge/ORM-6CCFF6?style=for-the-badge&logo=sequelize&logoColor=white)
-
+![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=jwt&logoColor=yellow)
+![OAuth](https://img.shields.io/badge/OAuth-4285F4?style=for-the-badge&logo=oauth&logoColor=white)
+![Helmet](https://img.shields.io/badge/Helmet-5A5A5A?style=for-the-badge&logo=helmet&logoColor=white)
 
 > **Course:** Advanced Software Engineering
+
 > **Instructor:** Dr. Amjad AbuHassan  
 
 ---
@@ -61,15 +65,16 @@ The system is designed to be **scalable**, **secure**, and **user-centric**, ens
 ## 💡 Technology Stack & Justification
 
 We chose the following technologies based on scalability, security, and maintainability requirements:
-
 | Technology | Role | Justification |
 | :--- | :--- | :--- |
-| **Java 17** | Core Language | Strongly typed, robust, and widely used in enterprise-level healthcare systems. |
-| **Spring Boot** | Backend Framework | **Efficiency:** Reduces boilerplate code.<br>**Security:** Built-in Spring Security for Role-Based Access Control (RBAC).<br>**Ecosystem:** Seamless integration with Data JPA and Web MVC. |
-| **MySQL** | Database | **Reliability:** ACID compliance ensures data integrity for sensitive medical and financial transactions.<br>**Relational:** Perfect for handling complex relationships (Doctor-Patient-Appointment). |
-| **Hibernate / JPA** | ORM | Simplifies database interactions and protects against SQL injection. |
-| **Lombok** | Library | Improves code readability by auto-generating getters, setters, and builders. |
-| **Stripe API** | External Integration | Secure and standard solution for handling international credit card donations. |
+| **Node.js** | Core Language & Runtime | **Scalable:** Event-driven, non-blocking I/O ideal for real-time applications.<br>**JavaScript Everywhere:** Single language for both frontend and backend. |
+| **Express.js** | Backend Framework | **Efficiency:** Minimal and flexible framework for building REST APIs.<br>**Middleware Support:** Easy integration for authentication, logging, and error handling. |
+| **Gemeni API** | Chatbot Integration | Provides real-time responses and AI-based interactions for the chatbot. |
+| **Weather API** | Weather & Wind Data | Supplies accurate weather and wind information for users. |
+| **Stripe API** | Payment Integration | Secure and standard solution for handling international credit card donations/payments. |
+| **MySQL** | Database | **Reliability:** ACID compliance ensures data integrity.<br>**Relational:** Handles structured data like users, transactions, or readings effectively. |
+| **ORMs ( Sequelize)** | Database Abstraction | Simplifies database interactions, protects against SQL injection, and eases CRUD operations. |
+| **Authentication (Auth)** | Security | Implements secure login and role-based access control to protect sensitive data. |
 
 ---
 
@@ -147,11 +152,11 @@ To ensure smooth collaboration, our team followed a strict Git workflow:
 
 ## 👥 The Team
 
-| Name | Role | GitHub |
-| :--- | :--- | :--- |
-| **Haneen Habash** | Backend Developer | [@HaneenHabash](https://github.com/) |
-| **Raghad Shaar** | Backend Developer | [@RaghadShaar](https://github.com/) |
-| **Lujain Toma** | Backend Developer | [@LujainToma](https://github.com/) |
+| Name | Role | GitHub | LinkedIn |
+| :--- | :--- | :--- | :--- |
+| **Haneen Habash** | Computer Engineering | [@HaneenHabash](https://github.com/) | [Haneen LinkedIn](https://www.linkedin.com/in/haneen-habash-26b226282/) |
+| **Raghad Shaar** | Computer Engineering | [@RaghadShaar](https://github.com/) | [Raghad LinkedIn](https://www.linkedin.com/in/raghad-shaar/) |
+| **Lujain Toma** | Computer Engineering | [@LujainToma](https://github.com/) | [Lujain LinkedIn](https://www.linkedin.com/in/lujain-toma-8a3272396/) |
 
 ---
 *© 2025 HealthPal Project. Built for the RESTful API Course.*
