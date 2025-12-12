@@ -61,22 +61,6 @@ Developed By:
       { name: "Payments", description: "Stripe / Payment API" },
 
 
-=======
-      { name: "PublicAlerts", description: "Public health alerts & emergencies" },
-      { name: "Environment", description: "Weather & air-quality APIs" },
-      { name: "HealthGuides", description: "Health education content" },
-      { name: "Workshops", description: "Health education workshops" },
-      { name: "WorkshopRegistrations", description: "Workshop registrations & certificates" },
-      { name: "Treatment Cases", description: "Medical donation cases" },
-      { name: "Donations", description: "Donation operations" },
-      { name: "Donors", description: "Donor profiles" },
-      { name: "Requests", description: "Medical requests" },
-      { name: "Item Donations", description: "Item donation management" },
-      { name: "Transparency & Impact", description: "Invoices & donor transparency" },
-      { name: "Mental Assessments", description: "Mental health assessments" },
-      { name: "Anonymous Therapy Chat", description: "Anonymous therapy chat" },
-      { name: "Payments", description: "Stripe / Payment APIs" },
->>>>>>> 3a20362f5ab149ac5d13b662e648f7480e8b4e5f
     ],
 
     components: {
