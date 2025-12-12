@@ -121,9 +121,10 @@ CREATE DATABASE healthpal_db;
 npm install
 ```
 5. Run the application:
-```npm start 
-   ```
 ```
+npm start 
+```
+
 ---
 ## 📘 API Documentation
 We use **Postman** for API testing and documentation. The API collection includes examples for all endpoints (GET, POST, PUT, DELETE).
