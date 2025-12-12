@@ -98,6 +98,71 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 // Initialize Swagger (Call this only once)
 swaggerDocs(app);
 
+app.use('/api/profile', require('./routes/profileRoutes'));
+
+
+
+const requestRoutes = require('./routes/requestRoutes');
+app.use('/api/requests', requestRoutes);
+
+const medicineRoutes = require('./routes/medicineRoutes');
+app.use('/api/medicines', medicineRoutes);
+
+const equipmentRoutes = require('./routes/equipmentRoutes');
+app.use('/api/equipments', equipmentRoutes);
+
+
+const itemDonationRoutes = require('./routes/itemDonationRoutes');
+app.use('/api/item-donations', itemDonationRoutes);
+
+const volunteerRoutes = require('./routes/volunteerRoutes');
+app.use('/api/volunteers', volunteerRoutes);
+
+const ngoRoutes = require('./routes/ngoRoutes');
+app.use('/api/ngos', ngoRoutes);
+
+app.use("/api/activities", require("./routes/ngoActivityRoutes"));
+
+
+const availabilityRoutes = require('./routes/availabilityRoutes');
+app.use('/api/availabilities', availabilityRoutes);
+
+const appointmentRoutes = require('./routes/appointmentRoutes');
+app.use('/api/appointments', appointmentRoutes);
+
+require('./cron/activityNotifier');
+require('./utils/sendEmail');
+
+
+
+/**
+ * @swagger
+ * /api/health:
+ *   get:
+ *     summary: Check if the HealthPal API is running
+ *     description: Returns a status message to confirm that the API is active and healthy.
+ *     responses:
+ *       200:
+ *         description: Successful health check
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "OK 👌"
+ *                 message:
+ *                   type: string
+ *                   example: "HealthPal API is working perfectly! 🏥"
+ *                 version:
+ *                   type: string
+ *                   example: "1.0.0"
+ *                 timestamp:
+ *                   type: string
+ *                   example: "2025-10-25T23:25:00.000Z"
+ */
+
 // Health Check Endpoint
 app.get('/api/health', (req, res) => {
   res.json({
@@ -137,13 +202,12 @@ async function startServer() {
     await sequelize.authenticate();
     console.log('✅ Database connected successfully!');
 
-    // careful with sync({ alter: true }) in production, it modifies schema
-    await sequelize.sync({ alter: true });
-    console.log('✅ All tables are created or updated!');
-
+    // هذا الأمر سيقوم بحذف الجداول القديمة وإنشائها من جديد بشكل نظيف
+    await sequelize.sync({ alert: true });
+    console.log('✅ All tables synced successfully!');
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
-      console.log(`🚀 HealthPal API running on http://localhost:${PORT}`);
+      console.log(` HealthPal API running on http://localhost:${PORT}`);
       console.log(`📘 Check health: http://localhost:${PORT}/api/health`);
       console.log(`📄 Swagger Docs: http://localhost:${PORT}/api-docs`);
     });

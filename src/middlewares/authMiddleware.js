@@ -6,14 +6,8 @@ exports.protect = async (req, res, next) => {
   try {
     let token;
 
-  // شوف الهيدر كيف واصل
     console.log('AUTH HEADERS:', req.headers);
     console.log('AUTH HEADER AUTHORIZATION:', req.headers.authorization);
-
-
-
-
-
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith('Bearer')
@@ -27,10 +21,8 @@ exports.protect = async (req, res, next) => {
       });
     }
 
-    // 2) نتحقق من التوكن
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 3) نجيب اليوزر من الداتابيس
     const user = await User.findByPk(decoded.id);
 
     if (!user) {
@@ -39,7 +31,6 @@ exports.protect = async (req, res, next) => {
       });
     }
 
-    // 4) نخزّنه في req.user عشان نستخدمه بعدين
     req.user = user;
     next();
   } catch (err) {
@@ -52,7 +43,6 @@ exports.protect = async (req, res, next) => {
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    // لازم يكون protect اشتغل قبلها، عشان req.user يكون موجود
     if (!req.user) {
       return res.status(401).json({
         message: 'Not authorized, user not found in request',

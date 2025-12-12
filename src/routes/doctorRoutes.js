@@ -1,3 +1,219 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Doctors
+ *   description: Doctors operations
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Doctor:
+ *       type: object
+ *       required:
+ *         - name
+ *         - phone
+ *         - specialty
+ *         - language
+ *         - locationType
+ *         - experienceYears
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: Dr. Ahmad Ali
+ *         email:
+ *           type: string
+ *           example: doctor@mail.com
+ *         phone:
+ *           type: string
+ *           example: "+962799999999"
+ *         specialty:
+ *           type: string
+ *           example: cardiology
+ *         language:
+ *           type: string
+ *           example: Arabic
+ *         locationType:
+ *           type: string
+ *           example: local
+ *         experienceYears:
+ *           type: integer
+ *           example: 7
+ *         bio:
+ *           type: string
+ *           example: Experienced heart specialist
+ *         gender:
+ *           type: string
+ *           enum: [male, female]
+ */
+
+/**
+ * @swagger
+ * /api/doctors:
+ *   get:
+ *     summary: Get all doctors
+ *     tags: [Doctors]
+ *     responses:
+ *       200:
+ *         description: List of doctors
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/doctors/{id}:
+ *   get:
+ *     summary: Get doctor by ID
+ *     tags: [Doctors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Doctor found
+ *       400:
+ *         description: Invalid ID
+ *       404:
+ *         description: Doctor not found
+ */
+
+/**
+ * @swagger
+ * /api/doctors:
+ *   post:
+ *     summary: Create a new doctor
+ *     tags: [Doctors]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Doctor'
+ *     responses:
+ *       201:
+ *         description: Doctor created successfully
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/doctors/{id}:
+ *   put:
+ *     summary: Update doctor by ID
+ *     tags: [Doctors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               specialty:
+ *                 type: string
+ *               language:
+ *                 type: string
+ *               locationType:
+ *                 type: string
+ *               experienceYears:
+ *                 type: integer
+ *               bio:
+ *                 type: string
+ *               gender:
+ *                 type: string
+ *                 enum: [male, female]
+ *     responses:
+ *       200:
+ *         description: Doctor updated successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Doctor not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/doctors/{id}:
+ *   delete:
+ *     summary: Delete doctor by ID
+ *     tags: [Doctors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Doctor deleted successfully
+ *       400:
+ *         description: Invalid ID
+ *       404:
+ *         description: Doctor not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/doctors/search:
+ *   get:
+ *     summary: Search doctors with filters
+ *     tags: [Doctors]
+ *     parameters:
+ *       - in: query
+ *         name: locationType
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: specialty
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: language
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: minExperience
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Doctors found
+ *       404:
+ *         description: No doctors found
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Server error
+ */
 const express = require('express');
 const router = express.Router();
 const { Doctor } = require('../models');

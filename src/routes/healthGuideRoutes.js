@@ -1,8 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const healthGuideController = require('../controllers/healthGuideController');
+
 /**
  * @swagger
  * tags:
- *   name: HealthGuides
- *   description: Health education guides and medical awareness content
+ *   - name: HealthGuides
+ *     description: Health education guides and medical awareness content
  */
 
 /**
@@ -142,6 +146,8 @@
  *       500:
  *         description: Server error
  */
+router.get('/', healthGuideController.getGuides);
+router.post('/', healthGuideController.createGuide);
 
 /**
  * @swagger
@@ -219,24 +225,8 @@
  *       500:
  *         description: Server error
  */
-
-const express = require('express');
-const router = express.Router();
-const healthGuideController = require('../controllers/healthGuideController');
-
-// GET /api/education/guides  (list + filters)
-router.get('/', healthGuideController.getGuides);
-
-// POST /api/education/guides
-router.post('/', healthGuideController.createGuide);
-
-// GET /api/education/guides/:id
 router.get('/:id', healthGuideController.getGuideById);
-
-// PUT /api/education/guides/:id
 router.put('/:id', healthGuideController.updateGuide);
-
-// DELETE /api/education/guides/:id
 router.delete('/:id', healthGuideController.deleteGuide);
 
 module.exports = router;
