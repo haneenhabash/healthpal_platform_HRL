@@ -24,7 +24,7 @@ const equipmentController = require('../controllers/equipmentController');
  *               items:
  *                 $ref: '#/components/schemas/Equipment'
  */
-router.post('/', equipmentController.createEquipment);
+router.get('/', equipmentController.getAllEquipments);
 
 /**
  * @swagger

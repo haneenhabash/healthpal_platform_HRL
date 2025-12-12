@@ -10,7 +10,7 @@ router.put('/test', (req, res) => {
 
 /**
  * @swagger
- * /appointments/{id}/status:
+ * /api/appointments/{id}/status:
  *   put:
  *     summary: Update the status of an appointment
  *     tags:
@@ -51,7 +51,7 @@ router.get('/:id', appointmentController.getAppointmentById);
 
 /**
  * @swagger
- * /appointments:
+ * /api/appointments:
  *   post:
  *     summary: Request a new appointment between a patient and a doctor
  *     tags:

@@ -24,9 +24,22 @@ exports.createRequest = async (req, res) => {
 
 exports.getAllRequests = async (req, res) => {
   try {
-    const requests = await Request.findAll({
-      include: [{ model: Patient, as: 'patient' }]
-    });
+    const requests = await Request.findAll();
+
+    const results = await Promise.all(
+      requests.map(async (r) => {
+        let patient = null;
+        try {
+          patient = await Patient.findByPk(r.patientId);
+        } catch (err) {
+          console.warn(`Patient not found for requestId ${r.id}`);
+        }
+        return { ...r.dataValues, patient };
+      })
+    );
+    //const requests = await Request.findAll({
+      //include: [{ model: Patient, as: 'patient' }]
+    //});
     res.json(requests);
   } catch (err) {
     console.error(err);
@@ -37,10 +50,7 @@ exports.getAllRequests = async (req, res) => {
 
 exports.getRequestById = async (req, res) => {
   try {
-    const request = await Request.findByPk(req.params.id, {
-      include: [{ model: Patient, as: 'patient' }]
-    });
-
+   const request = await Request.findByPk(req.params.id);
     if (!request) return res.status(404).json({ error: 'Request not found' });
 
     res.json(request);
@@ -52,12 +62,9 @@ exports.getRequestById = async (req, res) => {
 
 exports.getRequestsByStatus = async (req, res) => {
   try {
-    const { status } = req.params; 
+    const { status } = req.params;
 
-    const requests = await Request.findAll({
-      where: { status },
-      include: [{ model: Patient, as: 'patient' }]
-    });
+    const requests = await Request.findAll({ where: { status } });
 
     res.json(requests);
   } catch (err) {
@@ -70,10 +77,7 @@ exports.getRequestsByType = async (req, res) => {
   try {
     const { type } = req.params; 
 
-    const requests = await Request.findAll({
-      where: { type },
-      include: [{ model: Patient, as: 'patient' }]
-    });
+    const requests = await Request.findAll({ where: { type } });
 
     res.json(requests);
   } catch (err) {
@@ -91,12 +95,12 @@ exports.updateRequest = async (req, res) => {
     const { type, itemId, itemName, quantity, status } = req.body;
 
     await request.update({
-      type: type || request.type,
-      itemId: itemId !== undefined ? itemId : request.itemId,
-      itemName: itemName || request.itemName,
-      quantity: quantity || request.quantity,
-      status: status || request.status,
-      lastEdited: new Date()
+       type: type !== undefined ? type : request.type,
+  itemId: itemId !== undefined ? itemId : request.itemId,
+  itemName: itemName !== undefined ? itemName : request.itemName,
+  quantity: quantity !== undefined ? quantity : request.quantity,
+  status: status !== undefined ? status : request.status,
+  lastEdited: new Date()
     });
 
     res.json(request);

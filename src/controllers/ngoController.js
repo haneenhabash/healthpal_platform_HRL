@@ -79,6 +79,22 @@ exports.registerNGO = async (req, res) => {
 };
 
 
+exports.getAllNGOs = async (req, res) => {
+  try {
+    const ngos = await NGO.findAll({
+      include: {
+        model: Donor,
+        attributes: ["id", "firstName", "lastName", "email", "phone"]
+      }
+    });
+
+    res.status(200).json(ngos);
+  } catch (error) {
+    console.error("Error fetching NGOs:", error);
+    res.status(500).json({ message: "Server error while retrieving NGOs" });
+  }
+};
+
 exports.verifyNgo = async (req, res) => {
   try {
     const { id } = req.params;     

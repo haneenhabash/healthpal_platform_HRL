@@ -9,7 +9,10 @@ exports.createActivity = async (req, res) => {
   try {
     const activity = await NGOActivity.create(req.body);
 
-    const patients = await Patient.findAll();
+    const patients = await Patient.findAll({
+  attributes: ['email']   // ناخذ بس الإيميل
+});
+
 
     const sendResults = await Promise.all(
       patients.map(async (patient) => {

@@ -6,7 +6,14 @@ const controller = require("../controllers/ngoActivityController");
 
 /**
  * @swagger
- * /activities:
+ * tags:
+ *   name: NGO Activities
+ *   description: Activities management and notification
+ */
+
+/**
+ * @swagger
+ * /api/activities:
  *   post:
  *     summary: Create a new NGO activity
  *     tags:
@@ -23,14 +30,11 @@ const controller = require("../controllers/ngoActivityController");
  *                 description: ID of the NGO creating the activity
  *               title:
  *                 type: string
- *                 description: Title of the activity
  *               description:
  *                 type: string
- *                 description: Detailed description of the activity
  *               activityType:
  *                 type: string
  *                 enum: [medical_mission, mobile_clinic, aid_drop, volunteer_event, awareness_campaign, emergency_response]
- *                 description: Type of activity
  *               country:
  *                 type: string
  *               city:
@@ -46,7 +50,6 @@ const controller = require("../controllers/ngoActivityController");
  *                 enum: [planned, in_progress, completed, cancelled]
  *               mediaUrl:
  *                 type: string
- *                 description: Link to image or media related to the activity
  *             required:
  *               - ngoId
  *               - title
@@ -58,8 +61,44 @@ const controller = require("../controllers/ngoActivityController");
  *         description: Invalid input data
  */
 router.post("/", controller.createActivity);
+/**
+ * @swagger
+ * /api/activities/ngo/{ngoId}:
+ *   get:
+ *     summary: Get all activities for a specific NGO
+ *     tags:
+ *       - NGO Activities
+ *     parameters:
+ *       - in: path
+ *         name: ngoId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the NGO
+ *     responses:
+ *       200:
+ *         description: List of NGO activities retrieved successfully
+ *       404:
+ *         description: NGO not found
+ */
 router.get("/ngo/:ngoId", controller.getActivitiesByNGO);
 router.put("/:id/status", controller.updateActivityStatus);
+
+/**
+ * @swagger
+ * /api/activities:
+ *   get:
+ *     summary: Get all NGO activities
+ *     tags:
+ *       - NGO Activities
+ *     description: Returns a list of all activities, including NGO info.
+ *     responses:
+ *       200:
+ *         description: List of activities retrieved successfully
+ *       500:
+ *         description: Server error
+ */
+
 router.get("/", controller.getAllActivities);
 
 module.exports = router;

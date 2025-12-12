@@ -38,20 +38,29 @@ Developed By:
       { name: "Availability", description: "Doctor availability management" },
       { name: "Appointments", description: "Patients appointments" },
       { name: "Messages", description: "Doctor-patient messaging with auto-translation" },
-      { name: "PublicAlerts", description: "Public health alerts & emergencies" },
-      { name: "Environment", description: "Weather & air-quality APIs" },
-      { name: "HealthGuides", description: "Health education content" },
-      { name: "Workshops", description: "Health education workshops" },
-      { name: "WorkshopRegistrations", description: "Workshop registrations & certificates" },
-      { name: "Treatment Cases", description: "Medical donation cases" },
-      { name: "Donations", description: "Donation operations" },
-      { name: "Donors", description: "Donor profiles" },
-      { name: "Requests", description: "Medical requests" },
-      { name: "Item Donations", description: "Item donation management" },
-      { name: "Transparency & Impact", description: "Invoices & donor transparency" },
-      { name: "Mental Assessments", description: "Mental health assessments" },
-      { name: "Anonymous Therapy Chat", description: "Anonymous therapy chat" },
-      { name: "Payments", description: "Stripe / Payment APIs" },
+
+      { name: "PublicAlerts", description: " Public health alerts, outbreaks, emergencies, and warnings" },
+      { name: "Environment", description: "Endpoints that use external weather and air-quality APIs" },
+      { name: "HealthGuides", description: "Health education guides and medical awareness content" },
+      { name: "Workshops", description: " Health education workshops and training sessions" },
+      { name: "WorkshopRegistrations", description: "Register attendees for workshops and manage attendance & certificates" },
+
+      { name: "Treatment Cases", description: "Medical cases for donation" },
+      { name: "Donations", description: "Donation and sponsorship operations" },
+      { name: "Donors", description: "Donor profiles and contributions" },
+      { name: "Equipment", description: " Essential Equipment Tracker" },
+      { name: "Requests", description: " Users can request critical medications or equipments" },
+      { name: "Item Donations", description: "Create a new item donation (either crowdsourced or matched to a patient request)" },
+      { name: "Volunteers", description: " Volunteers fulfill the matched requests to deliver them to patients" },
+      { name: "NGO", description: " Integrate with medical NGOs doing fieldwork" },
+      { name: "NGO Activities", description: "Activities management and notification" },
+      
+      { name: "Transparency & Impact", description: "Invoices, receipts, and donor visibility" },
+      { name: "Mental Assessments", description: "Mental health & trauma support" },
+      { name: "Anonymous Therapy Chat", description: "Anonymous therapy chat system" },
+      { name: "Payments", description: "Stripe / Payment API" },
+
+
     ],
 
     components: {
