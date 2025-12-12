@@ -115,13 +115,14 @@ This project uses **MySQL** with **Sequelize** for ORM. Follow these steps to se
 
 ```sql
 CREATE DATABASE healthpal_db;
-
+```
 3.  Install Dependencies:
+   ```
 npm install
-
-4. Run the application:
-npm start 
-   
+```
+5. Run the application:
+```npm start 
+   ```
 ```
 ---
 ## 📘 API Documentation
