@@ -154,9 +154,9 @@ To ensure smooth collaboration, our team followed a strict Git workflow:
 
 | Name | Role | GitHub | LinkedIn |
 | :--- | :--- | :--- | :--- |
-| **Haneen Habash** | Computer Engineering | [@HaneenHabash](https://github.com/) | [Haneen LinkedIn](https://www.linkedin.com/) |
-| **Raghad Shaar** | Computer Engineering | [@RaghadShaar](https://github.com/) | [Raghad LinkedIn](https://www.linkedin.com/) |
-| **Lujain Toma** | Computer Engineering | [@LujainToma](https://github.com/) | [Lujain LinkedIn](https://www.linkedin.com/) |
+| **Haneen Habash** | Computer Engineering | [@HaneenHabash](https://github.com/) | [Haneen LinkedIn](https://www.linkedin.com/in/haneen-habash-26b226282/) |
+| **Raghad Shaar** | Computer Engineering | [@RaghadShaar](https://github.com/) | [Raghad LinkedIn](https://www.linkedin.com/in/raghad-shaar/) |
+| **Lujain Toma** | Computer Engineering | [@LujainToma](https://github.com/) | [Lujain LinkedIn](https://www.linkedin.com/in/lujain-toma-8a3272396/) |
 
 ---
 *© 2025 HealthPal Project. Built for the RESTful API Course.*
