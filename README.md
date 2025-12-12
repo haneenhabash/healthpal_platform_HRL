@@ -22,7 +22,16 @@
 
 The system is designed to be **scalable**, **secure**, and **user-centric**, ensuring that humanitarian efforts reach those in need with precision and dignity.
 
----
+--- --- --- ---
+## 🚀 Live Demo
+Experience the HealthPal platform in action. You can check the live version here:  
+[View Live Demo](https://your-demo-link-goes-here.com)
+
+## 📚 API Documentation (Swagger)
+Explore the API endpoints, schemas, and test requests using Swagger UI:  
+[View Swagger Docs](http://localhost:3000/api-docs)
+
+
 
 ## 📑 Table of Contents
 - [Core Features](#-core-features)
