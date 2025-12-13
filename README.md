@@ -25,7 +25,7 @@ The system is designed to be **scalable**, **secure**, and **user-centric**, ens
 --- --- --- ---
 ## 🚀 Live Demo
 Experience the HealthPal platform in action. You can check the live version here:  
-[View Live Demo](https://your-demo-link-goes-here.com)
+[View Live Demo](https://drive.google.com/drive/folders/1zeTj9lIk-D8cJTthjnrlIoct1hjKz-Un)
 
 ## 📚 API Documentation (Swagger)
 Explore the API endpoints, schemas, and test requests using Swagger UI:  
